@@ -1,0 +1,7 @@
+query_id,assessment,notes
+1,mixed,"Results capture noisy-room complaints well, but only partially match the dirtiness aspect of the query."
+2,strong,"Top results are highly aligned and often near-exact matches for staff and location praise."
+3,strong,"Results consistently surface old furniture, old bathrooms, and small-room complaints."
+4,strong,"Results align well with breakfast and bed comfort, though some hits match only one half of the query."
+5,mixed,"Wifi complaints are captured strongly, but service quality is not present in every top hit."
+6,weak,"The query is too generic, so the system returns boilerplate positive snippets instead of discriminative examples."

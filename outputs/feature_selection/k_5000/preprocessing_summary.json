@@ -1,0 +1,30 @@
+{
+  "text_column": "review_text",
+  "label_scheme": "binary",
+  "cleaning_steps": [
+    "placeholder replacement for Positive_Review and Negative_Review",
+    "drop empty selected text column",
+    "lowercasing",
+    "remove non-letter characters",
+    "normalize whitespace",
+    "drop empty cleaned texts"
+  ],
+  "vectorizer": {
+    "method": "tfidf",
+    "stop_words": "english",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 50000
+  },
+  "rows_dropped": {
+    "by_label_filter": 14447,
+    "by_empty_selected_text": 33,
+    "by_empty_clean_text": 1
+  },
+  "train_rows": 28415,
+  "test_rows": 7104
+}

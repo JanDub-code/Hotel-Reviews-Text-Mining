@@ -1,0 +1,168 @@
+{
+  "config": {
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": 20000,
+    "k": 6,
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 30000,
+    "use_bigrams": true,
+    "random_state": 42,
+    "output_dir": "outputs/clustering/k_6"
+  },
+  "dataset": {
+    "rows_loaded": 20000,
+    "rows_after_text_filter": 14069,
+    "rows_after_cleaning": 14069,
+    "n_documents": 14069
+  },
+  "preprocessing": {
+    "text_column": "negative_text",
+    "cleaning_steps": [
+      "placeholder replacement for Negative_Review",
+      "drop empty negative_text",
+      "lowercasing",
+      "remove non-letter characters",
+      "normalize whitespace",
+      "drop empty cleaned texts"
+    ],
+    "vectorizer": {
+      "method": "tfidf",
+      "stop_words": "english",
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 5,
+      "max_df": 0.9,
+      "max_features": 30000
+    }
+  },
+  "silhouette_score": 0.008791236785261664,
+  "cluster_sizes": {
+    "cluster_0": 7968,
+    "cluster_1": 249,
+    "cluster_2": 171,
+    "cluster_3": 1285,
+    "cluster_4": 907,
+    "cluster_5": 3489
+  },
+  "top_terms": {
+    "cluster_0": [
+      "hotel",
+      "staff",
+      "rooms",
+      "bit",
+      "bar",
+      "bathroom",
+      "wifi",
+      "bed",
+      "location",
+      "really",
+      "shower",
+      "little"
+    ],
+    "cluster_1": [
+      "good",
+      "breakfast good",
+      "breakfast",
+      "room",
+      "good value",
+      "wifi good",
+      "food",
+      "wasn good",
+      "location",
+      "value",
+      "restaurant",
+      "wifi"
+    ],
+    "cluster_2": [
+      "like",
+      "didn like",
+      "didn",
+      "did like",
+      "wasn didn",
+      "wasn",
+      "did",
+      "like hotel",
+      "hotel",
+      "thing",
+      "didnt like",
+      "thing didn"
+    ],
+    "cluster_3": [
+      "breakfast",
+      "expensive",
+      "included",
+      "breakfast expensive",
+      "breakfast included",
+      "price",
+      "poor",
+      "better",
+      "bit",
+      "buffet",
+      "room",
+      "food"
+    ],
+    "cluster_4": [
+      "small",
+      "room",
+      "room small",
+      "small room",
+      "rooms",
+      "rooms small",
+      "small rooms",
+      "bit small",
+      "little small",
+      "bathroom",
+      "bit",
+      "little"
+    ],
+    "cluster_5": [
+      "room",
+      "air",
+      "hotel",
+      "bed",
+      "service",
+      "small",
+      "noisy",
+      "room service",
+      "bathroom",
+      "night",
+      "size",
+      "conditioning"
+    ]
+  },
+  "representative_reviews": {
+    "cluster_0": [
+      "See above",
+      "WIRELESS",
+      "Nothing at all"
+    ],
+    "cluster_1": [
+      "All good",
+      "All good",
+      "All good"
+    ],
+    "cluster_2": [
+      "Nothing I didn t like",
+      "There was nothing we didn t like",
+      "There was nothing I didn t like"
+    ],
+    "cluster_3": [
+      "Breakfast",
+      "Breakfast",
+      "Breakfast"
+    ],
+    "cluster_4": [
+      "room was soooo small",
+      "The room was not well illuminated and small",
+      "The room is too small"
+    ],
+    "cluster_5": [
+      "The room",
+      "L argent room",
+      "The room"
+    ]
+  }
+}

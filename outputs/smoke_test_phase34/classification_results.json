@@ -1,0 +1,287 @@
+{
+  "config": {
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": 5000,
+    "label_scheme": "binary",
+    "text_column": "review_text",
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 50000,
+    "use_bigrams": false,
+    "feature_selection_k": 0,
+    "test_size": 0.2,
+    "random_state": 42,
+    "output_dir": "outputs/smoke_test_phase34"
+  },
+  "dataset": {
+    "rows_loaded": 5000,
+    "rows_after_labeling": 3516,
+    "rows_after_text_filter": 3514,
+    "rows_after_cleaning": 3514,
+    "label_distribution": {
+      "positive": 3232,
+      "negative": 282
+    }
+  },
+  "preprocessing": {
+    "text_column": "review_text",
+    "label_scheme": "binary",
+    "cleaning_steps": [
+      "placeholder replacement for Positive_Review and Negative_Review",
+      "drop empty selected text column",
+      "lowercasing",
+      "remove non-letter characters",
+      "normalize whitespace",
+      "drop empty cleaned texts"
+    ],
+    "vectorizer": {
+      "method": "tfidf",
+      "stop_words": "english",
+      "ngram_range": [
+        1,
+        1
+      ],
+      "min_df": 5,
+      "max_df": 0.9,
+      "max_features": 50000
+    },
+    "rows_dropped": {
+      "by_label_filter": 1484,
+      "by_empty_selected_text": 2,
+      "by_empty_clean_text": 0
+    },
+    "train_rows": 2811,
+    "test_rows": 703
+  },
+  "metrics": {
+    "naive_bayes": {
+      "labels": [
+        "negative",
+        "positive"
+      ],
+      "macro_f1": 0.5311741094459753,
+      "weighted_f1": 0.8922298758290724,
+      "classification_report": {
+        "negative": {
+          "precision": 1.0,
+          "recall": 0.05357142857142857,
+          "f1-score": 0.1016949152542373,
+          "support": 56.0
+        },
+        "positive": {
+          "precision": 0.9242857142857143,
+          "recall": 1.0,
+          "f1-score": 0.9606533036377134,
+          "support": 647.0
+        },
+        "accuracy": 0.9246088193456614,
+        "macro avg": {
+          "precision": 0.9621428571428572,
+          "recall": 0.5267857142857143,
+          "f1-score": 0.5311741094459753,
+          "support": 703.0
+        },
+        "weighted avg": {
+          "precision": 0.9303170087380613,
+          "recall": 0.9246088193456614,
+          "f1-score": 0.8922298758290724,
+          "support": 703.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          3,
+          53
+        ],
+        [
+          0,
+          647
+        ]
+      ]
+    },
+    "logistic_regression": {
+      "labels": [
+        "negative",
+        "positive"
+      ],
+      "macro_f1": 0.5781730030721967,
+      "weighted_f1": 0.9015202975835404,
+      "classification_report": {
+        "negative": {
+          "precision": 1.0,
+          "recall": 0.10714285714285714,
+          "f1-score": 0.1935483870967742,
+          "support": 56.0
+        },
+        "positive": {
+          "precision": 0.9282639885222381,
+          "recall": 1.0,
+          "f1-score": 0.9627976190476191,
+          "support": 647.0
+        },
+        "accuracy": 0.9288762446657184,
+        "macro avg": {
+          "precision": 0.9641319942611191,
+          "recall": 0.5535714285714286,
+          "f1-score": 0.5781730030721967,
+          "support": 703.0
+        },
+        "weighted avg": {
+          "precision": 0.9339783791947198,
+          "recall": 0.9288762446657184,
+          "f1-score": 0.9015202975835404,
+          "support": 703.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          6,
+          50
+        ],
+        [
+          0,
+          647
+        ]
+      ]
+    },
+    "linear_svm": {
+      "labels": [
+        "negative",
+        "positive"
+      ],
+      "macro_f1": 0.7557573952749652,
+      "weighted_f1": 0.9342168098319943,
+      "classification_report": {
+        "negative": {
+          "precision": 0.6944444444444444,
+          "recall": 0.44642857142857145,
+          "f1-score": 0.5434782608695652,
+          "support": 56.0
+        },
+        "positive": {
+          "precision": 0.9535232383808095,
+          "recall": 0.9829984544049459,
+          "f1-score": 0.9680365296803652,
+          "support": 647.0
+        },
+        "accuracy": 0.9402560455192034,
+        "macro avg": {
+          "precision": 0.823983841412627,
+          "recall": 0.7147135129167587,
+          "f1-score": 0.7557573952749652,
+          "support": 703.0
+        },
+        "weighted avg": {
+          "precision": 0.932885382818311,
+          "recall": 0.9402560455192034,
+          "f1-score": 0.9342168098319943,
+          "support": 703.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          25,
+          31
+        ],
+        [
+          11,
+          636
+        ]
+      ]
+    }
+  },
+  "top_features": {
+    "logistic_regression": {
+      "top_positive_terms": [
+        "great",
+        "excellent",
+        "lovely",
+        "nice",
+        "perfect",
+        "comfortable",
+        "friendly",
+        "amazing",
+        "helpful",
+        "bit",
+        "really",
+        "loved",
+        "little",
+        "comfy",
+        "london",
+        "wonderful",
+        "quiet",
+        "modern",
+        "best",
+        "fantastic"
+      ],
+      "top_negative_terms": [
+        "old",
+        "star",
+        "poor",
+        "dirty",
+        "horrible",
+        "tired",
+        "rude",
+        "bad",
+        "room",
+        "half",
+        "terrible",
+        "uncomfortable",
+        "cold",
+        "smell",
+        "unhelpful",
+        "money",
+        "change",
+        "broken",
+        "need",
+        "needs"
+      ]
+    },
+    "linear_svm": {
+      "top_positive_terms": [
+        "great",
+        "perfect",
+        "lovely",
+        "bit",
+        "nice",
+        "interior",
+        "quiet",
+        "loved",
+        "included",
+        "london",
+        "easy",
+        "little",
+        "really",
+        "modern",
+        "super",
+        "excellent",
+        "food",
+        "liked",
+        "thanks",
+        "wonderful"
+      ],
+      "top_negative_terms": [
+        "horrible",
+        "old",
+        "star",
+        "terrible",
+        "tired",
+        "broken",
+        "dirty",
+        "soap",
+        "unhelpful",
+        "stars",
+        "rude",
+        "poor",
+        "smell",
+        "half",
+        "bothered",
+        "dated",
+        "apartment",
+        "change",
+        "stuffy",
+        "response"
+      ]
+    }
+  }
+}

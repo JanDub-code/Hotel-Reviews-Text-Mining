@@ -1,0 +1,41 @@
+sentiment,rank,term,model,feature_selection_k
+positive,1,great,linear_svm,5000
+positive,2,lovely,linear_svm,5000
+positive,3,fantastic,linear_svm,5000
+positive,4,loved,linear_svm,5000
+positive,5,perfect,linear_svm,5000
+positive,6,amazing,linear_svm,5000
+positive,7,wonderful,linear_svm,5000
+positive,8,bit,linear_svm,5000
+positive,9,quiet,linear_svm,5000
+positive,10,modern,linear_svm,5000
+positive,11,quickly,linear_svm,5000
+positive,12,good value,linear_svm,5000
+positive,13,thanks,linear_svm,5000
+positive,14,friendly helpful,linear_svm,5000
+positive,15,comfortable clean,linear_svm,5000
+positive,16,staff location,linear_svm,5000
+positive,17,comfy,linear_svm,5000
+positive,18,excellent,linear_svm,5000
+positive,19,friendliness,linear_svm,5000
+positive,20,beautiful,linear_svm,5000
+negative,1,dirty,linear_svm,5000
+negative,2,worst,linear_svm,5000
+negative,3,shabby,linear_svm,5000
+negative,4,poor,linear_svm,5000
+negative,5,tired,linear_svm,5000
+negative,6,unhelpful,linear_svm,5000
+negative,7,rude,linear_svm,5000
+negative,8,horrible,linear_svm,5000
+negative,9,overheated,linear_svm,5000
+negative,10,pictures,linear_svm,5000
+negative,11,worse,linear_svm,5000
+negative,12,refund,linear_svm,5000
+negative,13,unclean,linear_svm,5000
+negative,14,unfriendly,linear_svm,5000
+negative,15,dusty,linear_svm,5000
+negative,16,joke,linear_svm,5000
+negative,17,disgusting,linear_svm,5000
+negative,18,alert,linear_svm,5000
+negative,19,couldn sleep,linear_svm,5000
+negative,20,awful,linear_svm,5000

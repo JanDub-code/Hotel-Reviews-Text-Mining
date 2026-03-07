@@ -1,0 +1,16 @@
+{
+  "rows_loaded": 20000,
+  "rows_after_text_filter": 19985,
+  "rows_after_cleaning": 19985,
+  "text_column": "review_text",
+  "top_k": 5,
+  "use_bigrams": true,
+  "min_df": 3,
+  "max_df": 0.9,
+  "max_features": 30000,
+  "matrix_shape": [
+    19985,
+    21242
+  ],
+  "n_queries": 6
+}

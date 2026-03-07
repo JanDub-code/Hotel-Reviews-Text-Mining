@@ -1,0 +1,13 @@
+model,true_label,predicted_label,count
+naive_bayes,negative,negative,192
+naive_bayes,negative,positive,411
+naive_bayes,positive,negative,8
+naive_bayes,positive,positive,6493
+logistic_regression,negative,negative,241
+logistic_regression,negative,positive,362
+logistic_regression,positive,negative,27
+logistic_regression,positive,positive,6474
+linear_svm,negative,negative,329
+linear_svm,negative,positive,274
+linear_svm,positive,negative,79
+linear_svm,positive,positive,6422

@@ -1,0 +1,6 @@
+k,silhouette_score,n_documents,min_cluster_size,max_cluster_size,output_dir
+5,0.007467040757041612,14069,168,9677,outputs/clustering/k_5
+6,0.008791236785261664,14069,171,7968,outputs/clustering/k_6
+7,0.01001232822307847,14069,346,7036,outputs/clustering/k_7
+8,0.00896626035416719,14069,170,7138,outputs/clustering/k_8
+9,0.009816019419379401,14069,206,6112,outputs/clustering/k_9

@@ -1,0 +1,7 @@
+query_id,query,top_score,mean_top_k_score
+6,good hotel,1.0000000000000002,0.859246567763193
+2,friendly staff and great location,1.0,0.8232745217894039
+3,small bathroom and old furniture,0.6612950970879807,0.5112484335364345
+5,slow wifi and poor service,0.6048741792781999,0.49044141622883625
+1,dirty room and noisy street,0.5670919235705474,0.5184412774810936
+4,excellent breakfast and comfortable bed,0.5636099002244503,0.5300743567994937

@@ -1,0 +1,8 @@
+{
+  "reviewer_score_distribution_csv": "outputs/visuals/reviewer_score_distribution.csv",
+  "reviewer_score_distribution_png": "outputs/visuals/reviewer_score_distribution.png",
+  "model_results_table": "outputs/visuals/model_results_table.csv",
+  "top_features_table": "outputs/visuals/top_features_table.csv",
+  "cluster_summary_table": "outputs/visuals/cluster_summary_table.csv",
+  "retrieval_examples_table": "outputs/visuals/retrieval_examples_table.csv"
+}

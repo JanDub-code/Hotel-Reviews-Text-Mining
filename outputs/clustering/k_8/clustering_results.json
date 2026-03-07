@@ -1,0 +1,208 @@
+{
+  "config": {
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": 20000,
+    "k": 8,
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 30000,
+    "use_bigrams": true,
+    "random_state": 42,
+    "output_dir": "outputs/clustering/k_8"
+  },
+  "dataset": {
+    "rows_loaded": 20000,
+    "rows_after_text_filter": 14069,
+    "rows_after_cleaning": 14069,
+    "n_documents": 14069
+  },
+  "preprocessing": {
+    "text_column": "negative_text",
+    "cleaning_steps": [
+      "placeholder replacement for Negative_Review",
+      "drop empty negative_text",
+      "lowercasing",
+      "remove non-letter characters",
+      "normalize whitespace",
+      "drop empty cleaned texts"
+    ],
+    "vectorizer": {
+      "method": "tfidf",
+      "stop_words": "english",
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 5,
+      "max_df": 0.9,
+      "max_features": 30000
+    }
+  },
+  "silhouette_score": 0.00896626035416719,
+  "cluster_sizes": {
+    "cluster_0": 499,
+    "cluster_1": 3274,
+    "cluster_2": 170,
+    "cluster_3": 433,
+    "cluster_4": 1227,
+    "cluster_5": 692,
+    "cluster_6": 636,
+    "cluster_7": 7138
+  },
+  "top_terms": {
+    "cluster_0": [
+      "bar",
+      "mini bar",
+      "mini",
+      "prices",
+      "drinks",
+      "area",
+      "expensive",
+      "bar area",
+      "bar prices",
+      "staff",
+      "hotel",
+      "room"
+    ],
+    "cluster_1": [
+      "room",
+      "small",
+      "hotel",
+      "bed",
+      "service",
+      "size",
+      "bathroom",
+      "room service",
+      "noisy",
+      "night",
+      "air",
+      "did"
+    ],
+    "cluster_2": [
+      "like",
+      "didn like",
+      "didn",
+      "did like",
+      "did",
+      "wasn didn",
+      "wasn",
+      "thing",
+      "like hotel",
+      "didnt like",
+      "hotel",
+      "thing didn"
+    ],
+    "cluster_3": [
+      "small",
+      "room small",
+      "room",
+      "small room",
+      "bathroom",
+      "small bathroom",
+      "bed",
+      "bathroom small",
+      "quite small",
+      "quite",
+      "little small",
+      "bed small"
+    ],
+    "cluster_4": [
+      "breakfast",
+      "expensive",
+      "included",
+      "breakfast expensive",
+      "breakfast included",
+      "price",
+      "poor",
+      "good",
+      "better",
+      "buffet",
+      "room",
+      "food"
+    ],
+    "cluster_5": [
+      "bit",
+      "bit small",
+      "room bit",
+      "little bit",
+      "room",
+      "small",
+      "little",
+      "bit expensive",
+      "bit far",
+      "bit noisy",
+      "rooms bit",
+      "far"
+    ],
+    "cluster_6": [
+      "rooms",
+      "small",
+      "rooms small",
+      "good",
+      "small rooms",
+      "old",
+      "need",
+      "room",
+      "rooms little",
+      "little",
+      "noisy",
+      "little small"
+    ],
+    "cluster_7": [
+      "hotel",
+      "staff",
+      "bathroom",
+      "wifi",
+      "bed",
+      "location",
+      "shower",
+      "really",
+      "little",
+      "check",
+      "parking",
+      "great"
+    ]
+  },
+  "representative_reviews": {
+    "cluster_0": [
+      "the drunks in the bar",
+      "the bar",
+      "Bar priceses"
+    ],
+    "cluster_1": [
+      "Room is not clein",
+      "The room",
+      "L argent room"
+    ],
+    "cluster_2": [
+      "Nothing I didn t like",
+      "There was nothing we didn t like",
+      "There was nothing I didn t like"
+    ],
+    "cluster_3": [
+      "room is very small",
+      "Room small",
+      "The room is too small"
+    ],
+    "cluster_4": [
+      "Breakfast",
+      "The breakfast",
+      "No breakfast"
+    ],
+    "cluster_5": [
+      "Some of the paintings are bit abusive",
+      "A bit overprices",
+      "Bit of a warren"
+    ],
+    "cluster_6": [
+      "rooms are elegants but very small",
+      "Small apace rooms",
+      "Rooms"
+    ],
+    "cluster_7": [
+      "Nothing at all",
+      "Curatenia apartamentului nu exceleaza si cu miros de tigara Gresie in baie crapata si desprinsa",
+      "Nathing"
+    ]
+  }
+}

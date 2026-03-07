@@ -1,0 +1,31 @@
+query_id,query,rank,score,doc_id,hotel_name,reviewer_score,text_excerpt
+1,dirty room and noisy street,1,0.5670919235705474,4514,Novotel Paris Gare De Lyon,5.8,Location No water at room noisy from street
+1,dirty room and noisy street,2,0.5073763102502347,9473,Saint James Albany Paris Hotel Spa,8.8,Noisy because of the street noise
+1,dirty room and noisy street,3,0.5059127178615619,7258,Holiday Inn Paris Gare de l Est,7.9,the room was very noisy
+1,dirty room and noisy street,4,0.5059127178615619,18450,Millennium Gloucester Hotel London,6.0,Room 206 very noisy
+1,dirty room and noisy street,5,0.5059127178615619,3026,Grange Beauchamp Hotel,6.3,013 room is too noisy
+2,friendly staff and great location,1,1.0,1391,Hilton London Kensington Hotel,9.6,Very friendly staff and great location
+2,friendly staff and great location,2,1.0,19544,The Cavendish London,8.8,Friendly staff throughout Great location
+2,friendly staff and great location,3,0.7241604745157093,14459,Luxury Suites Amsterdam,9.6,Very friendly staff with great facility and location
+2,friendly staff and great location,4,0.7015338749593085,5886,Corus Hotel Hyde Park,7.9,Friendly staff great location Shower
+2,friendly staff and great location,5,0.6906782594720011,3749,Mercure Paris Terminus Nord,7.9,Helpful staff great location
+3,small bathroom and old furniture,1,0.6612950970879807,19724,Millennium Hotel London Mayfair,4.6,Location old furniture bathroom old
+3,small bathroom and old furniture,2,0.5087454038071668,18217,Eurostars Grand Marina Hotel GL,6.3,Location Very old furniture
+3,small bathroom and old furniture,3,0.49987480709270765,12643,Pullman Paris Montparnasse,9.6,location very quiet old furniture
+3,small bathroom and old furniture,4,0.4558903053137313,7691,Grange Fitzrovia Hotel,4.6,The bathroom was too old and the sink was not emptying well Bathroom
+3,small bathroom and old furniture,5,0.4304365543805858,13975,Cram,4.2,Room too small Old furniture No much facility to enjoy
+4,excellent breakfast and comfortable bed,1,0.5636099002244503,9037,The May Fair Hotel,9.6,excellent breakfast
+4,excellent breakfast and comfortable bed,2,0.5444259254068715,659,citizenM Amsterdam,8.3,Excellent breakfast Very clean Very comfortable bed
+4,excellent breakfast and comfortable bed,3,0.5295093887887309,2753,The Harmonie Vienna,7.9,Nice Breakfast Comfortable Bed Parking Is Not Easy
+4,excellent breakfast and comfortable bed,4,0.5285117043856566,10701,Grange City Hotel,10.0,Comfortable bed
+4,excellent breakfast and comfortable bed,5,0.4843148651917595,11231,Gainsborough Hotel,10.0,Quiet room and comfortable bed excellent breakfast too
+5,slow wifi and poor service,1,0.6048741792781999,7457,NH Hesperia Barcelona Presidente,9.6,wifi very poor
+5,slow wifi and poor service,2,0.5321246340072584,16905,Silken Ramblas,7.5,Location and bath misuleanus Wifi very poor
+5,slow wifi and poor service,3,0.43931368560527384,9296,Le Marceau Bastille,4.2,Bed was very hard Wifi was very poor
+5,slow wifi and poor service,4,0.43810828258927875,14293,Britannia International Hotel Canary Wharf,2.5,Poor service and accommodation would NOT recommend
+5,slow wifi and poor service,5,0.43778629966417054,3820,NH Collection Amsterdam Barbizon Palace,6.7,Wifi v poor and not available in room
+6,good hotel,1,1.0000000000000002,6382,Tryp Barcelona Apolo Hotel,7.5,Good hotel
+6,good hotel,2,1.0000000000000002,18742,Hotel Esther a,10.0,very good hotel
+6,good hotel,3,1.0000000000000002,4618,Palais Hansen Kempinski Vienna,10.0,Good hotel
+6,good hotel,4,0.6533172064797904,19638,NH Carlton Amsterdam,7.1,Staff and location Good hotel
+6,good hotel,5,0.6429156323361737,1092,Hotel de France Wien,9.6,Perfect location good hotel

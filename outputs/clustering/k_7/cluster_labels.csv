@@ -1,0 +1,8 @@
+cluster_id,manual_label,rationale
+cluster_0,misc short or mixed complaints,"Short or noisy negative snippets with weak thematic cohesion; includes generic dissatisfaction and residual pseudo-negative entries."
+cluster_1,very small room,"Reviews dominated by direct complaints about room size and cramped bathrooms."
+cluster_2,breakfast quality and inclusion,"Complaints about breakfast value, inclusion in price, buffet quality, and whether breakfast was worth paying for."
+cluster_3,small outdated rooms,"Focus on small rooms, dated interiors, and weak soundproofing."
+cluster_4,expensive extras,"Complaints about overpriced breakfast, parking, bar items, and similar add-on costs."
+cluster_5,room comfort and maintenance,"Mixed but coherent complaints about room condition, bed comfort, bathroom quality, noise, and service around the room."
+cluster_6,staff and reception problems,"Complaints about staff helpfulness, reception handling, check-in, and service attitude."
