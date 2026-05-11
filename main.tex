@@ -2,7 +2,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx, xdipp, url, fancyvrb}
 \usepackage[hidelinks]{hyperref}
-\cestina
+\english
 \usepackage{listings}
 \lstset{
   basicstyle=\ttfamily\small,
@@ -20,184 +20,200 @@
 \begin{document}
 
 \makeatletter
-\def\typprace{Semestrální}
-\def\c@prace{projekt}
+\def\typprace{Semester}
+\def\c@prace{project}
 \def\a@prace{project}
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\refname}{References}
+\def\obsah{\cleardoublepage\vspace*{5mm}%
+  \noindent {\doplsanserif\bfseries Abstract}\par\medskip
+  \noindent \@enabstraktdata\par\medskip\noindent\@enabstrakttext
+  \if .\@enklslova\else \par\medskip\noindent
+       {\doplsanserif\bfseries Key words:} \@enklslova
+  \fi
+  \cleardoublepage\tableofcontents\cleardoublepage}
 \makeatother
-\titul{Klasifikace sentimentu, shlukování témat a vyhledávání podobných hotelových recenzí}
-{\begin{tabular}[b]{@{}r} Bc. Jan Dub \\ Bc. David Krčmář \end{tabular}}{doc. Ing. František Dařena, Ph.D.}{Brno 2026}
+\titul{Sentiment Classification, Topic Clustering and Similarity Search in Hotel Reviews}
+{\begin{tabular}[b]{@{}r} Bc. Jan Dub \\ Bc. David Krčmář \\ Bc. René Mrákava \end{tabular}}{doc. Ing. František Dařena, Ph.D.}{Brno 2026}
 
-\abstract{Dub, J.; Krčmář, D. Sentiment Classification, Topic Clustering and Similarity Search in Hotel Reviews. Semester project. Mendel University in Brno, 2026.}
-{This semester project presents a compact end-to-end text-mining pipeline for hotel reviews from the Kaggle dataset \emph{515K Hotel Reviews Data in Europe}. The work validates and summarizes the original CSV file, preprocesses review text, trains and compares three classical classifiers, evaluates chi-square feature selection, clusters negative reviews with K-Means, and builds a TF-IDF retrieval module with cosine similarity. The dataset contains 515,738 reviews and 17 columns. On a 50,000-review development sample, the best sentiment configuration combines \textbf{TF-IDF with unigrams and bigrams, \texttt{SelectKBest(chi2, k=5000)} and Linear SVM}, reaching \textbf{macro F1 = 0.8120} and \textbf{accuracy = 95.03\%}. Negative-review clustering is interpretable but only weakly separated, with the best result at \textbf{k = 7} and \textbf{silhouette score = 0.0100}. Retrieval works well for specific multi-word queries and degrades for generic queries. The report discusses both the practical usefulness and the limits of classical text-mining methods on noisy user-generated review data.}
-
-\abstrakt{Dub, J.; Krčmář, D. Klasifikace sentimentu, shlukování témat a vyhledávání podobných hotelových recenzí. Semestrální projekt. Mendelova univerzita v Brně, 2026.}
-{Tento semestrální projekt představuje kompaktní end-to-end text-mining pipeline nad hotelovými recenzemi z Kaggle datasetu \emph{515K Hotel Reviews Data in Europe}. Práce ověřuje a shrnuje původní CSV soubor, předzpracovává text recenzí, trénuje a porovnává tři klasické klasifikační modely, vyhodnocuje výběr atributů pomocí chi-kvadrát testu, shlukuje negativní recenze metodou K-Means a buduje retrieval modul založený na TF-IDF a cosine similarity. Dataset obsahuje 515\,738 recenzí a 17 sloupců. Na development vzorku o velikosti 50\,000 recenzí dosáhla nejlepší konfigurace sentiment klasifikace ve složení \textbf{TF-IDF s unigramy a bigramy, \texttt{SelectKBest(chi2, k=5000)} a Linear SVM} hodnot \textbf{macro F1 = 0{,}8120} a \textbf{accuracy = 95{,}03~\%}. Clustering negativních recenzí je interpretovatelný, ale jen slabě separovaný; nejlepší konfigurace vyšla pro \textbf{k = 7} se \textbf{silhouette score = 0{,}0100}. Retrieval funguje dobře pro konkrétní víceslovné dotazy a ztrácí kvalitu u obecných formulací. Report diskutuje praktický přínos i limity klasických text-mining metod na hlučných uživatelských recenzích.}
+\abstract{Dub, J.; Krčmář, D.; Mrákava, R. Sentiment Classification, Topic Clustering and Similarity Search in Hotel Reviews. Semester project. Mendel University in Brno, 2026.}
+{This semester project presents a compact end-to-end text-mining pipeline for hotel reviews from the Kaggle dataset \emph{515K Hotel Reviews Data in Europe}. The work validates and summarizes the original CSV file, preprocesses review text, trains and compares three classical classifiers, evaluates chi-square feature selection, clusters negative reviews with K-Means, and builds a TF-IDF retrieval module with cosine similarity. The dataset contains 515,738 reviews and 17 columns. In the final benchmark run, sentiment classification used the full available dataset with \textbf{TF-IDF unigrams and bigrams, \texttt{SelectKBest(chi2, k=20000)} and Linear SVM}, reaching \textbf{macro F1 = 0.8510} and \textbf{accuracy = 95.90\%}. Negative-review clustering on a 50,000-row sample remains interpretable but weakly separated, with \textbf{k = 7} and \textbf{silhouette score = 0.0085}. Retrieval works well for specific multi-word queries and degrades for generic queries. The report discusses both the practical usefulness and the limits of classical text-mining methods on noisy user-generated review data.}
 
 \keywords{text mining, hotel reviews, sentiment classification, clustering, information retrieval, TF-IDF, Linear SVM}
-\klslova{text mining, hotelové recenze, klasifikace sentimentu, clustering, information retrieval, TF-IDF, Linear SVM}
 
 \obsah
 
-\section*{\LARGE\textbf{Seznam použitých pojmů}}
+\section*{\LARGE\textbf{Glossary}}
 
 \begin{itemize}
-    \item \textbf{\textit{TF-IDF}}: vážená reprezentace textu, která zvýrazňuje termy důležité pro konkrétní dokument a potlačuje příliš častá slova v celé kolekci.
-    \item \textbf{\textit{n-gram}}: posloupnost $n$ tokenů; v této práci porovnáváme unigramy a kombinaci unigramů s bigramy.
-    \item \textbf{\textit{Linear SVM}}: lineární Support Vector Machine, tedy klasifikátor vhodný pro řídké textové reprezentace s vysokým počtem atributů.
-    \item \textbf{\textit{Chi-square feature selection}}: metoda výběru atributů podle závislosti mezi termem a cílovou třídou.
-    \item \textbf{\textit{K-Means}}: clustering algoritmus, který rozděluje dokumenty do předem zadaného počtu clusterů podle vzdálenosti od centroidů.
-    \item \textbf{\textit{Silhouette score}}: interní metrika clusteringu hodnotící kompaktnost clusteru a jeho oddělení od ostatních clusterů.
-    \item \textbf{\textit{Cosine similarity}}: míra podobnosti dvou vektorů podle úhlu mezi nimi; standardní volba pro porovnávání TF-IDF reprezentací.
+    \item \textbf{\textit{TF-IDF}}: a weighted text representation that highlights terms important for a specific document while down-weighting terms that are frequent across the whole collection.
+    \item \textbf{\textit{n-gram}}: a sequence of $n$ tokens; this project compares unigrams with a combination of unigrams and bigrams.
+    \item \textbf{\textit{Linear SVM}}: a linear Support Vector Machine classifier suitable for sparse text representations with many features.
+    \item \textbf{\textit{Chi-square feature selection}}: a feature-selection method based on the statistical dependence between a term and the target class.
+    \item \textbf{\textit{K-Means}}: a clustering algorithm that partitions documents into a predefined number of clusters according to their distance from cluster centroids.
+    \item \textbf{\textit{Silhouette score}}: an internal clustering metric that evaluates how compact a cluster is and how well it is separated from other clusters.
+    \item \textbf{\textit{Cosine similarity}}: a vector similarity measure based on the angle between two vectors; it is a standard choice for comparing TF-IDF representations.
 \end{itemize}
 
-\kapitola{Úvod a motivace}
+\kapitola{Introduction and motivation}
 
-Hotelové recenze jsou vhodným příkladem reálných textových dat, na nichž lze ukázat hlavní úlohy text miningu v jedné společné pipeline. Každá recenze kombinuje volný text, číselné skóre a doplňující metadata. Tato kombinace umožňuje současně řešit klasifikaci sentimentu, tematické shlukování i vyhledávání podobných dokumentů.
+Hotel reviews are a suitable example of real-world text data on which the main tasks of text mining can be demonstrated within one shared pipeline. Each review combines free text, a numerical score, and additional metadata. This combination makes it possible to address sentiment classification, topic clustering, and similar-document search at the same time.
 
-Praktická motivace je dvojí. Zaprvé hotelové recenze představují obchodně důležitý zdroj zpětné vazby pro provozovatele ubytování i agregátory typu Booking.com. Zadruhé jde o dataset s realistickým množstvím šumu: obsahuje placeholdery typu \texttt{No Negative}, velmi krátké zápisy, různou délku recenzí i nevyvážené rozdělení výsledných tříd. Projekt je proto vhodný nejen pro demonstraci funkčních metod, ale i pro otevřenou diskusi jejich limitů.
+The practical motivation is twofold. First, hotel reviews are a commercially important source of feedback for accommodation providers and booking platforms such as Booking.com. Second, the dataset contains realistic noise: placeholders such as \texttt{No Negative}, very short entries, variable review length, and an imbalanced distribution of target classes. The project is therefore useful not only for demonstrating working methods, but also for discussing their limits openly.
 
-Z pohledu předmětu práce pokrývá reprezentaci textu, preprocessing, klasifikaci, feature selection, clustering i information retrieval. Místo jedné izolované úlohy tak vzniká konzistentní text-mining projekt se sdíleným datasetovým základem a společným vyhodnocením.
+From the perspective of the course, the work covers text representation, preprocessing, classification, feature selection, clustering, and information retrieval, which are standard tasks in text mining and NLP [4, 5]. Instead of focusing on one isolated task, the project creates a consistent text-mining workflow with a shared dataset and a common evaluation logic.
 
-\kapitola{Cíl práce a výzkumné otázky}
+\kapitola{Project goal and research questions}
 
-Cílem práce je navrhnout a implementovat kompaktní text-mining pipeline pro analýzu hotelových recenzí a ověřit, které klasické metody fungují na tomto typu dat nejlépe.
+The goal of this project is to design and implement a compact text-mining pipeline for hotel-review analysis and to evaluate which classical methods work best on this type of data.
 
-\sekce{Hlavní cíle}
+\sekce{Main objectives}
 
 \begin{enumerate}
-    \item připravit a zdokumentovat dataset hotelových recenzí,
-    \item vytvořit společnou textovou reprezentaci vhodnou pro strojové učení,
-    \item natrénovat a porovnat několik modelů sentiment klasifikace,
-    \item vyhodnotit vliv výběru atributů pomocí \texttt{SelectKBest(chi2)},
-    \item identifikovat hlavní tematické okruhy v negativních recenzích pomocí clusteringu,
-    \item vytvořit jednoduchý retrieval modul vracející podobné recenze pro zadaný dotaz.
+    \item prepare and document a hotel-review dataset,
+    \item create a shared text representation suitable for machine learning,
+    \item train and compare several sentiment-classification models,
+    \item evaluate the effect of feature selection using \texttt{SelectKBest(chi2)},
+    \item identify the main themes in negative reviews using clustering,
+    \item create a simple retrieval module returning similar reviews for a given query.
 \end{enumerate}
 
-\sekce{Výzkumné otázky}
+\sekce{Research questions}
 
 \begin{enumerate}
-    \item Který ze tří klasických modelů (\texttt{MultinomialNB}, \texttt{LogisticRegression}, \texttt{LinearSVC}) dosahuje na hotelových recenzích nejlepší kvality?
-    \item Pomůže výběr atributů pomocí \texttt{SelectKBest(chi2)} oproti čistému TF-IDF baseline?
-    \item Jaká témata dominují negativním recenzím a nakolik jsou výsledné clustery interpretovatelné?
-    \item Nakolik dobře funguje retrieval založený na TF-IDF a cosine similarity pro konkrétní a obecné dotazy?
+    \item Which of the three classical models (\texttt{MultinomialNB}, \texttt{LogisticRegression}, \texttt{LinearSVC}) achieves the best performance on hotel reviews?
+    \item Does feature selection using \texttt{SelectKBest(chi2)} improve performance compared with a plain TF-IDF baseline?
+    \item Which themes dominate negative reviews, and how interpretable are the resulting clusters?
+    \item How well does TF-IDF and cosine-similarity retrieval work for specific and generic queries?
 \end{enumerate}
 
 \kapitola{Dataset}
 
-\sekce{Zdroj a struktura dat}
+\sekce{Data source and structure}
 
-Primárním zdrojem je Kaggle dataset \emph{515K Hotel Reviews Data in Europe} od Jiashena Liu. Pracujeme s originálním souborem \texttt{Hotel\_Reviews.csv}, který je uložen v lokální struktuře projektu v adresáři \texttt{data/raw/}. Dataset obsahuje textová pole \texttt{Positive\_Review} a \texttt{Negative\_Review}, dále číselné skóre \texttt{Reviewer\_Score} a pomocná metadata, například \texttt{Hotel\_Name}, \texttt{Average\_Score}, \texttt{Tags} nebo zeměpisnou polohu hotelu.
+The primary data source is the Kaggle dataset \emph{515K Hotel Reviews Data in Europe} by Jiashen Liu [1]. The project uses the original file \texttt{Hotel\_Reviews.csv}, which is expected in the local project structure under \texttt{data/raw/}. The dataset contains the text fields \texttt{Positive\_Review} and \texttt{Negative\_Review}, the numerical score \texttt{Reviewer\_Score}, and additional metadata such as \texttt{Hotel\_Name}, \texttt{Average\_Score}, \texttt{Tags}, and the hotel location.
 
 \begin{table}[H]
 \centering
-\caption{Základní charakteristika datasetu}
+\caption{Basic dataset characteristics}
 \begin{tabular}{|p{5.2cm}|p{8cm}|}
 \hline
-\textbf{Položka} & \textbf{Hodnota} \\ \hline
-Zdroj & Kaggle: \emph{515K Hotel Reviews Data in Europe} \\ \hline
-Hlavní soubor & \texttt{Hotel\_Reviews.csv} \\ \hline
-Počet řádků & 515\,738 \\ \hline
-Počet sloupců & 17 \\ \hline
-Klíčové atributy & \texttt{Positive\_Review}, \texttt{Negative\_Review}, \texttt{Reviewer\_Score}, \texttt{Hotel\_Name}, \texttt{Tags} \\ \hline
-Datové typy & textová pole typu object, skóre typu float64, některé počty typu int64 \\ \hline
-Chybějící hodnoty & v textových polích a skóre 0; u \texttt{lat}/\texttt{lng} celkem 3\,268 hodnot \\ \hline
-Rozsah \texttt{Reviewer\_Score} & 2.5 až 10.0 \\ \hline
-Průměr / medián skóre & 8.3951 / 8.8 \\ \hline
+\textbf{Item} & \textbf{Value} \\ \hline
+Source & Kaggle: \emph{515K Hotel Reviews Data in Europe} \\ \hline
+Main file & \texttt{Hotel\_Reviews.csv} \\ \hline
+Number of rows & 515,738 \\ \hline
+Number of columns & 17 \\ \hline
+Key attributes & \texttt{Positive\_Review}, \texttt{Negative\_Review}, \texttt{Reviewer\_Score}, \texttt{Hotel\_Name}, \texttt{Tags} \\ \hline
+Data types & text fields of type object, scores of type float64, selected counts of type int64 \\ \hline
+Missing values & 0 in the review-text fields and score; 3,268 missing values in \texttt{lat}/\texttt{lng} \\ \hline
+\texttt{Reviewer\_Score} range & 2.5 to 10.0 \\ \hline
+Mean / median score & 8.3951 / 8.8 \\ \hline
 \end{tabular}
 \end{table}
 
-\sekce{Kvalita dat a praktická omezení}
+\sekce{Data quality and practical limitations}
 
-Dataset je rozsáhlý, ale nikoli čistý. Velká část recenzí používá placeholdery typu \texttt{No Negative} nebo \texttt{No Positive}. V ověřeném lokálním snapshotu se vyskytuje 152\,663 hodnot typu \texttt{No Negative} a 37\,791 hodnot typu \texttt{No Positive}. Kromě toho se objevují i krátké pseudo-negativní výrazy jako \texttt{No complaints}, \texttt{Everything was perfect} nebo pouze \texttt{Breakfast}, které nejsou technicky placeholder, ale obsahově komplikují další zpracování.
+The dataset is large, but it is not clean. Many reviews use placeholders such as \texttt{No Negative} or \texttt{No Positive}. In the verified local snapshot, there are 152,663 values of \texttt{No Negative} and 37,791 values of \texttt{No Positive}. In addition, short pseudo-negative expressions such as \texttt{No complaints}, \texttt{Everything was perfect}, or simply \texttt{Breakfast} occur in the data. These are not technical placeholders, but they complicate further processing.
 
-Dalším omezením je výrazně pozitivní rozdělení skóre. Nejčastější hodnota v celém datasetu je 10.0, která se vyskytuje 115\,853krát, zatímco spodní část škály je zastoupena podstatně méně. To je důležité pro návrh labelů i pro interpretaci accuracy, která sama o sobě nestačí.
+Another limitation is the strongly positive score distribution. The most frequent value in the full dataset is 10.0, appearing 115,853 times, while the lower part of the scale is much less common. This is important for label design and for interpreting accuracy, because accuracy alone is not sufficient for an imbalanced classification problem.
 
-\sekce{Rozdělení skóre recenzí}
+\sekce{Review-score distribution}
 
-Rozdělení \texttt{Reviewer\_Score} ukazuje obrázek \ref{fig:score-distribution}. Vysoká koncentrace hodnocení v intervalu 8.3 až 10.0 potvrzuje, že jde o dataset s přirozeným pozitivním biasem.
+The distribution of \texttt{Reviewer\_Score} is shown in Figure \ref{fig:score-distribution}. The high concentration of scores between 8.3 and 10.0 confirms that the dataset has a natural positive bias.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{outputs/visuals/reviewer_score_distribution.png}
-\caption{Rozdělení hodnot \texttt{Reviewer\_Score} v celém datasetu}
+\caption{Distribution of \texttt{Reviewer\_Score} in the full dataset}
 \label{fig:score-distribution}
 \end{figure}
 
-\sekce{Pracovní režim}
+\sekce{Working mode}
 
-Pro samotné experimenty jsme nepoužívali plný dataset ve všech krocích. Pro rychlé iterace a ladění se ukázal jako praktický vzorek 20\,000 až 50\,000 záznamů, zatímco plný dataset zůstává vhodný spíše jako volitelný benchmark. Tento kompromis odpovídá školnímu charakteru projektu: hlavním cílem je porovnání metod a interpretace výsledků, nikoli maximalizace výkonu za cenu dlouhých běhů a vyšších paměťových nároků.
+The project uses different dataset scopes for different tasks. Classification and retrieval are configured for a full-dataset benchmark run, using a high \texttt{--sample-size} value that exceeds the number of available records and therefore disables downsampling in the shared loading function. Clustering remains sample-based with 50,000 records, because full-dataset clustering is slower, harder to interpret, and does not automatically improve cluster separation. 
+This compromise fits the educational nature of the project: the main goal is to compare methods and interpret results, not to maximize model performance at the cost of long runtime and higher memory requirements.
+
+\sekce{Reproducibility note}
+
+The dataset is not included in the repository because of its size and distribution through Kaggle. After downloading \texttt{Hotel\_Reviews.csv} into \texttt{data/raw/}, the larger final benchmark configuration can be reproduced with the following commands:
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize, numbers=none, frame=single, breaklines=true]
+python src/classification.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --use-bigrams --feature-selection-k 20000
+python src/clustering.py --data data/raw/Hotel_Reviews.csv --sample-size 50000 --k 7 --use-bigrams
+python src/retrieval.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --query "dirty room and noisy street" --top-k 5
+\end{lstlisting}
 
 \kapitola{Data preprocessing}
 
-\sekce{Tvorba textových atributů}
+\sekce{Text-attribute construction}
 
-V projektu vytváříme tři společné textové varianty:
+The project creates three shared text variants:
 
 \begin{itemize}
-    \item \texttt{review\_text}: spojení pozitivní a negativní části recenze,
-    \item \texttt{negative\_text}: pouze negativní část recenze,
-    \item \texttt{positive\_text}: pouze pozitivní část recenze.
+    \item \texttt{review\_text}: concatenation of the positive and negative parts of the review,
+    \item \texttt{negative\_text}: only the negative part of the review,
+    \item \texttt{positive\_text}: only the positive part of the review.
 \end{itemize}
 
-Pro sentiment klasifikaci se jako nejlepší volba ukázalo \texttt{review\_text}, protože kombinuje oba póly recenze a dává modelu nejvíce kontextu. Pro clustering jsme naopak používali \texttt{negative\_text}, kde jsou témata problémů čitelnější.
+For sentiment classification, \texttt{review\_text} proved to be the best option because it combines both sides of the review and gives the model the most context. For clustering, \texttt{negative\_text} was used because problem topics are more readable in that field.
 
-\sekce{Čisticí pipeline}
+\sekce{Cleaning pipeline}
 
-Před samotnou reprezentací proběhly následující kroky:
+Before text representation, the following steps were applied:
 
 \begin{enumerate}
-    \item náhrada placeholderů v polích \texttt{Positive\_Review} a \texttt{Negative\_Review} prázdným textem,
-    \item odstranění prázdných vybraných textových polí,
-    \item převod na malá písmena,
-    \item odstranění nealfabetických znaků,
-    \item normalizace mezer,
-    \item odstranění záznamů, které zůstaly prázdné i po cleaningu.
+    \item replace placeholders in \texttt{Positive\_Review} and \texttt{Negative\_Review} with empty text,
+    \item remove records with empty selected text fields,
+    \item convert text to lowercase,
+    \item remove non-alphabetic characters,
+    \item normalize whitespace,
+    \item remove records that remained empty after cleaning.
 \end{enumerate}
 
-Na development vzorku o velikosti 50\,000 řádků vedl binární label filter a preprocessing k následujícímu průchodu daty:
+On the full available dataset, binary label filtering and preprocessing produced the following data flow:
 
 \begin{table}[H]
 \centering
-\caption{Průchod daty po labelingu a preprocessingu}
+\caption{Data flow after labeling and preprocessing}
 \begin{tabular}{|p{7cm}|r|}
 \hline
-\textbf{Krok} & \textbf{Počet řádků} \\ \hline
-Načtený development sample & 50\,000 \\ \hline
-Po binárním labelingu & 35\,553 \\ \hline
-Po odfiltrování prázdného textového pole & 35\,520 \\ \hline
-Po final cleaningu & 35\,519 \\ \hline
-Train split & 28\,415 \\ \hline
-Test split & 7\,104 \\ \hline
+\textbf{Step} & \textbf{Number of rows} \\ \hline
+Loaded dataset & 515,738 \\ \hline
+After binary labeling & 366,349 \\ \hline
+After filtering empty text fields & 365,997 \\ \hline
+After final cleaning & 365,988 \\ \hline
+Training split & 292,790 \\ \hline
+Test split & 73,198 \\ \hline
 \end{tabular}
 \end{table}
 
-\sekce{Reprezentace textu a labely}
+\sekce{Text representation and labels}
 
-Finální baseline pro klasifikaci používá TF-IDF reprezentaci z knihovny scikit-learn. Testovali jsme unigramy i kombinaci unigramů s bigramy; lepší se ukázala druhá varianta. Zvolená konfigurace byla:
+The final classification baseline uses the TF-IDF representation from scikit-learn [2]. TF-IDF is a standard sparse vector-space representation for text retrieval and related text-mining tasks [3]. Both unigrams and a combination of unigrams and bigrams were tested; the second option performed better. The selected configuration was:
 
 \begin{itemize}
     \item \texttt{ngram\_range = (1, 2)},
     \item \texttt{min\_df = 5},
     \item \texttt{max\_df = 0.9},
     \item \texttt{max\_features = 50000},
-    \item anglický seznam stop slov ze scikit-learn.
+    \item the English stop-word list from scikit-learn.
 \end{itemize}
 
-Sentiment labely byly vytvořeny binárně:
+Sentiment labels were created as binary labels:
 
 \begin{itemize}
     \item \texttt{Reviewer\_Score <= 5.0} $\rightarrow$ negative,
     \item \texttt{Reviewer\_Score >= 8.0} $\rightarrow$ positive,
-    \item střední pásmo bylo z klasifikace vynecháno.
+    \item the middle score range was excluded from classification.
 \end{itemize}
 
-Tento návrh záměrně zvyšuje separaci tříd, ale zároveň zmenšuje datovou základnu. Po filtrování zůstalo na development vzorku 32\,502 pozitivních a 3\,017 negativních recenzí, což potvrzuje výraznou nevyváženost tříd.
+This design intentionally increases class separability, but it also reduces the number of usable records. After filtering, the full benchmark dataset contained 335,365 positive and 30,623 negative reviews, confirming strong class imbalance.
 
 \kapitola{Sentiment classification}
 
-\sekce{Použité modely a evaluační nastavení}
+\sekce{Models and evaluation setup}
 
-Porovnávali jsme tři klasické modely vhodné pro řídké textové reprezentace:
+Three classical models suitable for sparse text representations were compared. The implementation uses scikit-learn [2]; Linear SVM follows the margin-based classification principle introduced by support vector machines [6].
 
 \begin{itemize}
     \item \texttt{Multinomial Naive Bayes},
@@ -205,157 +221,153 @@ Porovnávali jsme tři klasické modely vhodné pro řídké textové reprezenta
     \item \texttt{Linear SVM}.
 \end{itemize}
 
-Pro rozdělení dat byl použit stratifikovaný train/test split v poměru 80/20. Kvůli nevyváženosti tříd sledujeme kromě accuracy také macro precision, macro recall a macro F1. To je důležité zejména proto, že vysoká accuracy může vznikat i při systematickém zanedbávání menšinové negativní třídy.
+The data was split into stratified training and test sets in an 80/20 ratio. Because of class imbalance, accuracy is reported together with macro precision, macro recall, and macro F1. This is important because high accuracy could otherwise hide weak performance on the minority negative class.
 
-\sekce{Baseline výsledky bez feature selection}
+\sekce{Final benchmark results with feature selection}
 
-Tabulka \ref{tab:classification-baseline} shrnuje výsledky baseline konfigurace nad \texttt{review\_text} s TF-IDF unigramy a bigramy.
+Table \ref{tab:classification-baseline} summarizes the final benchmark results on \texttt{review\_text} using TF-IDF unigrams and bigrams with \texttt{SelectKBest(chi2, k=20000)}.
 
 \begin{table}[H]
 \centering
-\caption{Výsledky sentiment klasifikace bez feature selection}
+\caption{Final sentiment-classification results with \texttt{SelectKBest(chi2, k=20000)}}
 \label{tab:classification-baseline}
 \small
 \begin{tabular}{|p{4.0cm}|c|c|c|c|}
 \hline
 \textbf{Model} & \textbf{Macro prec.} & \textbf{Macro rec.} & \textbf{Macro F1} & \textbf{Acc.} \\ \hline
-Linear SVM & 0.8717 & 0.7602 & 0.8039 & 0.9481 \\ \hline
-Logistic Regression & 0.9152 & 0.6982 & 0.7612 & 0.9447 \\ \hline
-Multinomial Naive Bayes & 0.9476 & 0.5926 & 0.6374 & 0.9303 \\ \hline
+Linear SVM & 0.8977 & 0.8158 & 0.8510 & 0.9590 \\ \hline
+Logistic Regression & 0.9131 & 0.7938 & 0.8412 & 0.9582 \\ \hline
+Multinomial Naive Bayes & 0.9044 & 0.7726 & 0.8230 & 0.9544 \\ \hline
 \end{tabular}
 \normalsize
 \end{table}
 
-Linear SVM skončil v baseline první. Logistic Regression zůstává konkurenceschopná, ale zaostává hlavně v macro recall. Naive Bayes sice drží slušnou accuracy, avšak na minoritní negativní třídě ztrácí, což se projeví výrazně slabším macro F1.
+Linear SVM ranked first in the final benchmark. Logistic Regression remained competitive, but it lagged mainly in macro recall. Naive Bayes achieved acceptable accuracy, but it performed worse on the minority negative class, which reduced macro F1.
 
-\sekce{Interpretace nejlepší baseline}
+\sekce{Interpretation of the best final model}
 
-Pro nejlepší baseline model (\texttt{Linear SVM}) ukazuje confusion matrix následující chování:
+For the best final model (\texttt{Linear SVM}), the confusion matrix shows the following behavior:
 
 \begin{table}[H]
 \centering
-\caption{Confusion matrix pro baseline Linear SVM}
+\caption{Confusion matrix for final Linear SVM}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Skutečná / predikovaná třída} & \textbf{Negative} & \textbf{Positive} \\ \hline
-Negative & 321 & 281 \\ \hline
-Positive & 88 & 6\,413 \\ \hline
+\textbf{Actual / predicted class} & \textbf{Negative} & \textbf{Positive} \\ \hline
+Negative & 3,944 & 2,181 \\ \hline
+Positive & 823 & 66,250 \\ \hline
 \end{tabular}
 \end{table}
 
-Model tedy velmi dobře rozpoznává pozitivní recenze, ale část negativních recenzí stále přiřazuje do pozitivní třídy. To odpovídá charakteru dat: negativní třída je menší, lexikálně méně homogenní a častěji obsahuje krátké či smíšené formulace.
+The model recognizes positive reviews very well, but it still assigns part of the negative reviews to the positive class. This corresponds to the nature of the data: the negative class is smaller, lexically less homogeneous, and more likely to contain short or mixed formulations.
 
 \kapitola{Feature selection}
 
-\sekce{Metoda a experimentální nastavení}
+\sekce{Method and experimental setup}
 
-V další fázi jsme nad stejnou TF-IDF reprezentací aplikovali \texttt{SelectKBest(chi2)}. Cílem bylo ověřit, zda výběr atributů dokáže odstranit část šumu, zlepšit generalizaci a zároveň nabídnout lépe interpretovatelné termy pro sentiment.
+In the next phase, \texttt{SelectKBest(chi2)} from scikit-learn was applied to the same TF-IDF representation [2]. The goal was to test whether feature selection can remove part of the noise, improve generalization, and provide more interpretable terms for sentiment analysis.
 
-Testovali jsme hodnoty $k \in \{0, 5000, 10000, 20000, 30000\}$, kde $k = 0$ znamená baseline bez feature selection. U vyšších hodnot se ukázalo, že skutečný počet aktivních atributů po vektorizaci je pouze 15\,266; proto konfigurace s $k = 20000$ a $k = 30000$ fakticky vracejí všechny atributy a reprodukují baseline.
+Feature selection was first compared on a 50,000-row development sample with $k \in \{0, 5000, 10000, 20000, 30000\}$, where $k = 0$ means the baseline without feature selection. For that smaller experiment, the actual number of active features after vectorization was only 15,266; therefore, the configurations with $k = 20000$ and $k = 30000$ effectively returned all attributes and reproduced the baseline.
 
-\sekce{Porovnání konfigurací}
+\sekce{Configuration comparison}
 
 \begin{table}[H]
 \centering
-\caption{Vliv feature selection na nejlepší model (Linear SVM)}
+\caption{Effect of feature selection on the best model (Linear SVM)}
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{k} & \textbf{Macro F1} & \textbf{Accuracy} \\ \hline
 0 & 0.8039 & 0.9481 \\ \hline
-5\,000 & 0.8120 & 0.9503 \\ \hline
-10\,000 & 0.8032 & 0.9479 \\ \hline
-20\,000 & 0.8039 & 0.9481 \\ \hline
-30\,000 & 0.8039 & 0.9481 \\ \hline
+5,000 & 0.8120 & 0.9503 \\ \hline
+10,000 & 0.8032 & 0.9479 \\ \hline
+20,000 & 0.8039 & 0.9481 \\ \hline
+30,000 & 0.8039 & 0.9481 \\ \hline
 \end{tabular}
 \end{table}
 
-Nejlepší výsledek vyšel pro \texttt{k = 5000}. Oproti baseline se macro F1 zlepšilo o 0.0082 a accuracy o 0.0023. Nárůst není dramatický, ale je konzistentní a dostatečný pro to, abychom tuto konfiguraci zvolili jako finální variantu pro report.
+The best development-sample result was obtained with \texttt{k = 5000}. For the final full-dataset benchmark, the project used \texttt{k = 20000} to retain more potentially useful terms in the much larger corpus while still applying chi-square feature selection.
 
-\sekce{Nejdůležitější termy pro sentiment}
+\sekce{Most important sentiment terms}
 
-Feature selection pomohla nejen výkonu, ale i interpretaci. Pro nejlepší konfiguraci (\texttt{Linear SVM + k = 5000}) se mezi nejsilnějšími indikátory objevily následující termy:
+Feature selection also supports interpretation. For the final configuration (\texttt{Linear SVM + k = 20000}), the strongest indicators included the following terms:
 
 \begin{table}[H]
 \centering
-\caption{Výběr výrazných sentiment termů}
+\caption{Selected sentiment terms}
 \begin{tabular}{|p{5.8cm}|p{5.8cm}|}
 \hline
-\textbf{Pozitivní sentiment} & \textbf{Negativní sentiment} \\ \hline
-great & dirty \\ \hline
-lovely & worst \\ \hline
-fantastic & shabby \\ \hline
-loved & poor \\ \hline
-perfect & tired \\ \hline
-amazing & unhelpful \\ \hline
-good value & rude \\ \hline
-friendly helpful & horrible \\ \hline
+\textbf{Positive sentiment} & \textbf{Negative sentiment} \\ \hline
+excellent & dirty \\ \hline
+amazing & worst \\ \hline
+lovely & disinterested \\ \hline
+fantastic & filthy \\ \hline
+great & unclean \\ \hline
+loved & impolite \\ \hline
+perfect & rude \\ \hline
+definitely stay & unhelpful \\ \hline
 \end{tabular}
 \end{table}
 
-Termy mají dobrou sémantickou interpretovatelnost a potvrzují, že klasické lineární modely nad TF-IDF pro tento typ dat dávají smysluplný signál.
+The terms are semantically interpretable and confirm that classical linear models over TF-IDF provide a meaningful signal for this type of data.
 
-\kapitola{Clustering negativních recenzí}
+\kapitola{Clustering negative reviews}
 
-\sekce{Vstupní data a metoda}
+\sekce{Input data and method}
 
-Clustering jsme prováděli nad polem \texttt{negative\_text}, protože právě zde lze nejlépe identifikovat opakující se typy problémů. Z development vzorku 20\,000 recenzí zůstalo po odstranění prázdných a neinformatických textů 14\,069 dokumentů. Použili jsme TF-IDF s unigramy a bigramy a následně algoritmus K-Means z knihovny scikit-learn.
+Clustering was performed on \texttt{negative\_text}, because this field is the most useful for identifying repeated problem types. From a 50,000-row sample, 35,088 documents remained after removing empty and uninformative texts. TF-IDF with unigrams and bigrams was used, followed by K-Means from scikit-learn [2]. K-Means is a standard partitional clustering method [7].
 
-\sekce{Volba počtu clusterů}
+\sekce{Choosing the number of clusters}
 
-Testovali jsme hodnoty $k = 5, 6, 7, 8, 9$. Výsledky shrnuje tabulka \ref{tab:clustering-k}.
+The value $k = 7$ was selected from the earlier development comparison and then used in the larger 50,000-row clustering run. The final run is summarized in Table \ref{tab:clustering-k}.
 
 \begin{table}[H]
 \centering
-\caption{Porovnání clusteringu pro různé hodnoty $k$}
+\caption{Final clustering summary for $k = 7$}
 \label{tab:clustering-k}
 \begin{tabular}{|c|c|c|c|}
 \hline
-\textbf{k} & \textbf{Silhouette score} & \textbf{Min. velikost clusteru} & \textbf{Max. velikost clusteru} \\ \hline
-5 & 0.0075 & 168 & 9\,677 \\ \hline
-6 & 0.0088 & 171 & 7\,968 \\ \hline
-7 & 0.0100 & 346 & 7\,036 \\ \hline
-8 & 0.0090 & 170 & 7\,138 \\ \hline
-9 & 0.0098 & 206 & 6\,112 \\ \hline
+\textbf{k} & \textbf{Silhouette score} & \textbf{Min. cluster size} & \textbf{Max. cluster size} \\ \hline
+7 & 0.0085 & 366 & 19,397 \\ \hline
 \end{tabular}
 \end{table}
 
-Nejlepší volba podle silhouette score je $k = 7$. Absolutní hodnota této metriky je však velmi nízká, takže výsledek je potřeba chápat opatrně: clustery jsou interpretovatelné, ale nikoli ostře oddělené.
+The silhouette score is an internal measure of cluster compactness and separation [8]. The final value is very low, so the result must be interpreted carefully: the clusters are interpretable, but they are not sharply separated.
 
-\sekce{Interpretace finálních clusterů}
+\sekce{Interpretation of the final clusters}
 
-Pro nejlepší konfiguraci jsme clustery ručně pojmenovali podle top termů a reprezentativních recenzí:
+For the best configuration, the clusters were manually named according to top terms and representative reviews:
 
 \begin{table}[H]
 \centering
-\caption{Ruční interpretace clusterů pro $k = 7$}
+\caption{Manual interpretation of clusters for $k = 7$}
 \begin{tabular}{|c|r|p{6cm}|}
 \hline
-\textbf{Cluster} & \textbf{Velikost} & \textbf{Interpretace} \\ \hline
-0 & 7\,036 & misc short or mixed complaints \\ \hline
-1 & 604 & very small room \\ \hline
-2 & 1\,197 & breakfast quality and inclusion \\ \hline
-3 & 612 & small outdated rooms \\ \hline
-4 & 346 & expensive extras \\ \hline
-5 & 3\,311 & room comfort and maintenance \\ \hline
-6 & 963 & staff and reception problems \\ \hline
+\textbf{Cluster} & \textbf{Size} & \textbf{Interpretation} \\ \hline
+0 & 366 & generic dislike or short negative fragments \\ \hline
+1 & 8,282 & room comfort, service, bathroom, and night issues \\ \hline
+2 & 1,435 & Wi-Fi and air-conditioning problems \\ \hline
+3 & 19,397 & broad miscellaneous hotel and staff comments \\ \hline
+4 & 2,016 & small-room complaints \\ \hline
+5 & 2,980 & breakfast quality, price, and inclusion \\ \hline
+6 & 612 & parking and car-access costs \\ \hline
 \end{tabular}
 \end{table}
 
-Obsahově nejčistší jsou clustery zaměřené na malý pokoj, drahé doplňky, snídani nebo problémy se staffem. Slabší je naopak největší cluster, který zachycuje směs krátkých, obecných nebo jen částečně negativních zápisů.
+The cleanest clusters are those focused on Wi-Fi, air conditioning, small rooms, breakfast, and parking. The weakest result is the largest cluster, which captures a mixture of broad hotel, staff, room, and bathroom comments.
 
-\sekce{Slabé stránky clusteringu}
+\sekce{Weaknesses of clustering}
 
-Nízké silhouette score a existence velkého \uv{misc} clusteru přímo souvisí s kvalitou vstupních textů. V datech zůstávají krátké nebo pseudo-negativní formulace typu \texttt{No failings}, \texttt{No complaints}, \texttt{Everything was perfect}, \texttt{Breakfast} nebo \texttt{Expensive}. Tyto výrazy snižují tematickou čistotu clusterů a zkreslují centroidy. Clustering zde proto vnímáme především jako exploratorní nástroj pro shrnutí častých problémů, nikoli jako finální segmentaci zákazníků.
+The low silhouette score and the existence of a large ``miscellaneous'' cluster are directly related to input-text quality. The data still contains short or pseudo-negative formulations such as \texttt{No failings}, \texttt{No complaints}, \texttt{Everything was perfect}, \texttt{Breakfast}, or \texttt{Expensive}. These expressions reduce thematic purity and distort centroids. Therefore, clustering should be understood mainly as an exploratory tool for summarizing frequent problems, not as a final customer segmentation.
 
 \kapitola{Information retrieval}
 
-\sekce{Návrh retrieval modulu}
+\sekce{Retrieval-module design}
 
-Retrieval modul využívá stejný princip jako klasifikační reprezentace, tentokrát však nad polem \texttt{review\_text}. Na development vzorku 20\,000 recenzí zůstalo po cleaningu 19\,985 dokumentů. Finální TF-IDF index má rozměr 19\,985 $\times$ 21\,242 a vyhledávání probíhá pomocí cosine similarity.
+The retrieval module uses the same vector-space principle as the classification representation, but it is applied to \texttt{review\_text}. In the final run, retrieval was configured for the full available dataset with \texttt{--sample-size 999999}. The TF-IDF representation uses up to 30,000 unigram features, and retrieval is performed using cosine similarity, a common similarity measure in vector-space information retrieval [3].
 
-\sekce{Ukázkové dotazy}
+\sekce{Example queries}
 
-Připravili jsme šest dotazů, které pokrývají jak konkrétní problémy, tak obecné formulace:
+The final reproducibility run used the query \texttt{dirty room and noisy street}. Earlier qualitative checks also covered several specific and generic formulations:
 
 \begin{itemize}
     \item \texttt{dirty room and noisy street},
@@ -366,76 +378,81 @@ Připravili jsme šest dotazů, které pokrývají jak konkrétní problémy, ta
     \item \texttt{good hotel}.
 \end{itemize}
 
-\sekce{Kvalitativní zhodnocení relevance}
+\sekce{Qualitative relevance assessment}
 
 \begin{table}[H]
 \centering
-\caption{Kvalitativní hodnocení retrieval dotazů}
+\caption{Qualitative assessment of retrieval queries}
 \begin{tabular}{|p{6.2cm}|c|p{5cm}|}
 \hline
-\textbf{Dotaz} & \textbf{Hodnocení} & \textbf{Poznámka} \\ \hline
-friendly staff and great location & strong & velmi přesné nebo téměř přesné shody \\ \hline
-small bathroom and old furniture & strong & vrací starý nábytek, staré koupelny i malé pokoje \\ \hline
-excellent breakfast and comfortable bed & strong & dobré pokrytí snídaně i komfortu postele \\ \hline
-dirty room and noisy street & mixed & dobře zachytí hluk, ale už méně špínu \\ \hline
-slow wifi and poor service & mixed & silný signál pro wifi, slabší pro service \\ \hline
-good hotel & weak & příliš obecný dotaz vrací boilerplate pozitivní fráze \\ \hline
+\textbf{Query} & \textbf{Rating} & \textbf{Note} \\ \hline
+friendly staff and great location & strong & very accurate or nearly exact matches \\ \hline
+small bathroom and old furniture & strong & returns old furniture, old bathrooms, and small rooms \\ \hline
+excellent breakfast and comfortable bed & strong & good coverage of breakfast and bed comfort \\ \hline
+dirty room and noisy street & mixed & captures noise well, but cleanliness less reliably \\ \hline
+slow wifi and poor service & mixed & strong signal for Wi-Fi, weaker signal for service \\ \hline
+good hotel & weak & too generic; returns boilerplate positive phrases \\ \hline
 \end{tabular}
 \end{table}
 
-Retrieval funguje nejlépe tehdy, když dotaz obsahuje konkrétní vlastnosti hotelového zážitku. U obecných dotazů model přirozeně preferuje velmi krátké a časté pozitivní fráze, což snižuje užitečnost výsledků.
+Retrieval works best when the query contains concrete aspects of the hotel experience. In the final full-dataset run, the top results for \texttt{dirty room and noisy street} were short but relevant, including \texttt{very noisy dirty}, \texttt{room on the street side very noisy}, and \texttt{the room was very noisy from the street}. For generic queries, the model naturally prefers short and frequent positive phrases, which reduces the usefulness of the results.
 
-\kapitola{Diskuse}
+\kapitola{Discussion}
 
-\sekce{Co fungovalo nejlépe}
+\sekce{What worked best}
 
-Nejstabilnější částí celé pipeline byla sentiment klasifikace. Už čistý TF-IDF baseline s Linear SVM poskytl macro F1 přes 0.80 a feature selection pomocí \texttt{SelectKBest(chi2, k=5000)} přinesla další, byť nikoli dramatické zlepšení. To potvrzuje, že pro tento typ dat jsou lineární modely nad řídkou reprezentací stále velmi silnou a dobře interpretovatelnou volbou.
+The most stable part of the pipeline was sentiment classification. In the final full-dataset benchmark, Linear SVM with TF-IDF and chi-square feature selection reached macro F1 = 0.8510 and accuracy = 95.90\%. This confirms that linear models over sparse representations remain strong and interpretable for this type of data.
 
-Pozitivně hodnotíme také retrieval modul. Pro konkrétní víceslovné dotazy vrací smysluplné a snadno interpretovatelné výsledky bez nutnosti používat složitější embeddingové modely.
+The retrieval module also performed well. For specific multi-word queries, it returned meaningful and easily interpretable results without requiring more complex embedding models.
 
-\sekce{Co bylo problematické}
+\sekce{What was problematic}
 
-Hlavním problémem datasetu je šum. Kromě explicitních placeholderů zůstávají v datech krátké, obsahově nejednoznačné nebo pouze formálně negativní zápisy. Tento šum má přímý dopad zejména na clustering, kde vede k nízké separaci clusterů a ke vzniku jednoho dominantního \uv{misc} clusteru.
+The main problem in the dataset is noise. In addition to explicit placeholders, the data contains short, semantically ambiguous, or only formally negative entries. This noise directly affects clustering, where it leads to weak separation and to one dominant miscellaneous cluster.
 
-Druhým problémem je nevyváženost tříd po binárním labelingu. Accuracy u klasifikace je velmi vysoká, ale bez macro metrik by snadno zakryla fakt, že model má na negativní třídě stále podstatně slabší recall než na třídě pozitivní.
+The second problem is class imbalance after binary labeling. Classification accuracy is very high, but without macro metrics it would easily hide the fact that the model still has substantially weaker recall on the negative class than on the positive class.
 
-\sekce{Limity práce}
+\sekce{Limitations of the work}
 
 \begin{itemize}
-    \item většina experimentů byla prováděna na development vzorcích 20\,000 až 50\,000 řádků, nikoli na plném datasetu,
-    \item retrieval byl hodnocen kvalitativně, bez ručně anotovaného relevance benchmarku,
-    \item clustering byl interpretován ručně a bez externí ground truth,
-    \item preprocessing používá jednoduché čištění bez lemmatizace, stemmingu nebo transformerových embeddingů.
+    \item clustering was still run on a 50,000-row sample rather than on the full dataset,
+    \item retrieval was evaluated qualitatively, without a manually annotated relevance benchmark,
+    \item clustering was interpreted manually and without external ground truth,
+    \item preprocessing uses simple cleaning without lemmatization, stemming, or transformer embeddings.
 \end{itemize}
 
 \sekce{Future work}
 
-Přirozeným pokračováním projektu by bylo:
+Natural extensions of the project include:
 
 \begin{itemize}
-    \item rozšířit slovník placeholderů a filtrovat krátké pseudo-negativní fráze cíleněji,
-    \item otestovat plný dataset nebo alespoň větší reportový vzorek kolem 100\,000 dokumentů,
-    \item porovnat K-Means s NMF nebo topic modelingem,
-    \item rozšířit retrieval o BM25 nebo sentence embeddings,
-    \item zkusit vážení tříd nebo cílený sampling pro zlepšení recall negativní třídy.
+    \item expanding the placeholder dictionary and filtering short pseudo-negative phrases more precisely,
+    \item running additional full-dataset feature-selection comparisons,
+    \item comparing K-Means with NMF or topic modeling,
+    \item extending retrieval with BM25 or sentence embeddings,
+    \item trying class weighting or targeted sampling to improve recall for the negative class.
 \end{itemize}
 
-\kapitola{Závěr}
+\kapitola{Conclusion}
 
-Práce ukázala, že i klasické text-mining metody dokážou na hotelových recenzích podat solidní a dobře interpretovatelné výsledky. Po ověření a vyčištění datasetu jsme vytvořili jednotnou pipeline pro reprezentaci textu, sentiment klasifikaci, feature selection, clustering a retrieval.
+The project showed that classical text-mining methods can produce solid and interpretable results on hotel reviews. After validating and cleaning the dataset, a unified pipeline was created for text representation, sentiment classification, feature selection, clustering, and retrieval.
 
-Nejlepší klasifikační konfigurace využívá \texttt{review\_text}, TF-IDF s unigramy a bigramy, \texttt{SelectKBest(chi2, k=5000)} a Linear SVM. Tato varianta dosáhla macro F1 = 0.8120 a accuracy = 95.03~\%. Feature selection se ukázala jako přínosná, byť její efekt není velký. Clustering negativních recenzí přinesl užitečná tematická shrnutí, zejména pro malé pokoje, snídani, drahé doplňky nebo problémy se staffem, avšak při nízké vnitřní separaci clusterů. Retrieval modul potvrdil, že TF-IDF a cosine similarity jsou pro konkrétní dotazy stále prakticky použitelné.
+The best final classification configuration uses \texttt{review\_text}, TF-IDF with unigrams and bigrams, \texttt{SelectKBest(chi2, k=20000)}, and Linear SVM. This configuration achieved macro F1 = 0.8510 and accuracy = 95.90\%. Clustering of negative reviews produced useful thematic summaries, especially for Wi-Fi, air conditioning, small rooms, breakfast, and parking, but the internal separation of clusters was weak. The retrieval module confirmed that TF-IDF and cosine similarity remain practically usable for specific queries.
 
-Celkově projekt splnil zamýšlený cíl: na jednom realistickém datasetu ukázal kompletní text-mining workflow, jeho silné stránky i limity. Výsledky jsou dostatečně konkrétní pro report i prezentaci a zároveň vytvářejí prostor pro další rozšíření.
+Overall, the project met its intended goal: it demonstrated a complete text-mining workflow on one realistic dataset, including both strengths and limitations. The results are concrete enough for the written report and for project defense, while also leaving clear space for further extensions.
 
-\kapitola{Použitá literatura}
+\kapitola{References}
 
+{\raggedright
 \begin{enumerate}
-    \item Liu, J. \emph{515K Hotel Reviews Data in Europe}. Kaggle dataset. \par
-    Dostupné z: \url{https://www.kaggle.com} \par
-    Dataset path: \texttt{datasets/jiashenliu/515k-hotel-reviews-data-in-europe}
-    \item Pedregosa, F. a kol. Scikit-learn: Machine Learning in Python. \emph{Journal of Machine Learning Research}, 12, 2011, s.~2825--2830.
+    \item Liu, J. \emph{515K Hotel Reviews Data in Europe}. Kaggle dataset. Available from: \url{https://www.kaggle.com}. Dataset path: \texttt{datasets/jiashenliu/515k-hotel-reviews-data-in-europe}.
+    \item Pedregosa, F. et al. Scikit-learn: Machine Learning in Python. \emph{Journal of Machine Learning Research}, 12, 2011, pp.~2825--2830.
     \item Manning, C. D.; Raghavan, P.; Schütze, H. \emph{Introduction to Information Retrieval}. Cambridge University Press, 2008.
+    \item Žižka, J.; Dařena, F.; Svoboda, A. \emph{Text Mining with Machine Learning: Principles and Techniques}. CRC Press, 2019.
+    \item Jurafsky, D.; Martin, J. H. \emph{Speech and Language Processing}. 3rd ed. draft, 2026. Available from: \url{https://web.stanford.edu/~jurafsky/slp3/}.
+    \item Cortes, C.; Vapnik, V. Support-vector networks. \emph{Machine Learning}, 20, 1995, pp.~273--297.
+    \item MacQueen, J. Some methods for classification and analysis of multivariate observations. In: \emph{Proceedings of the Fifth Berkeley Symposium on Mathematical Statistics and Probability}, 1967, pp.~281--297.
+    \item Rousseeuw, P. J. Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. \emph{Journal of Computational and Applied Mathematics}, 20, 1987, pp.~53--65.
 \end{enumerate}
+\par}
 
 \end{document}

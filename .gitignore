@@ -1,3 +1,8 @@
 /.python-version
 /.venv
 /data
+__pycache__/
+*.py[cod]
+run_full.log
+run_full.status
+run_full.pid

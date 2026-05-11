@@ -45,10 +45,10 @@ Dataset má přibližně 515k řádků, ale pro školní projekt není nutné ja
 
 Doporučený režim práce:
 - **rychlé ladění / development:** 20k--50k záznamů
-- **hlavní experimenty do reportu:** cca 100k záznamů
+- **reportované experimenty:** 20k--50k záznamů podle typu úlohy
 - **celý dataset (~515k):** pouze jako volitelný finální benchmark nebo běh přes noc
 
-Důvod: pro TF-IDF + klasické modely (`MultinomialNB`, `LogisticRegression`, `LinearSVC`) přináší 100k už dostatečně silný vzorek, zatímco plný dataset výrazně zvyšuje čas i paměťové nároky. Větší praktický dopad než samotné navyšování dat má u tohoto datasetu ošetření placeholderů typu `No Negative` / `No Positive` a nevyváženost tříd.
+Důvod: pro TF-IDF + klasické modely (`MultinomialNB`, `LogisticRegression`, `LinearSVC`) přináší vzorky 20k--50k dostatečně rychlou a stabilní základnu pro porovnání metod, zatímco plný dataset výrazně zvyšuje čas i paměťové nároky. Větší praktický dopad než samotné navyšování dat má u tohoto datasetu ošetření placeholderů typu `No Negative` / `No Positive` a nevyváženost tříd.
 
 Alternativní mirror:
 - Hugging Face: `enelpol/booking_com_reviews`
@@ -237,22 +237,22 @@ pip install -r requirements-lock.txt
 4. spustit klasifikaci:
 
 ```bash
-python src/classification.py --data data/raw/Hotel_Reviews.csv --sample-size 50000
+python src/classification.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --use-bigrams --feature-selection-k 20000
 ```
 
 5. spustit clustering:
 
 ```bash
-python src/clustering.py --data data/raw/Hotel_Reviews.csv --sample-size 30000 --k 8
+python src/clustering.py --data data/raw/Hotel_Reviews.csv --sample-size 50000 --k 7 --use-bigrams
 ```
 
 6. spustit retrieval:
 
 ```bash
-python src/retrieval.py --data data/raw/Hotel_Reviews.csv --query "dirty room and noisy street" --top-k 5
+python src/retrieval.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --query "dirty room and noisy street" --top-k 5
 ```
 
-Poznámka: pro první běhy nepouštět plný dataset, ale držet se spíše vzorků 20k--50k. Pro finální reportové běhy je doporučený rozsah okolo 100k.
+Poznámka: `--sample-size 999999` je praktický sentinel pro celý dataset, protože skripty vzorkují jen tehdy, když je zadaná hodnota menší než počet řádků. Klasifikace a retrieval jsou nastavené na celý dostupný dataset; clustering zůstává na 50k kvůli rychlosti, paměti a interpretovatelnosti.
 
 ## 12. Recommended final scope
 ### Core scope

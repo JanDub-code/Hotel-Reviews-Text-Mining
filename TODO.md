@@ -15,7 +15,7 @@ Status k 2026-03-07:
 - [x] stáhnout Kaggle dataset `515K Hotel Reviews Data in Europe`
 - [x] ověřit, že soubor `Hotel_Reviews.csv` jde načíst bez chyb
 - [x] zkontrolovat sloupce a datové typy
-- [x] potvrdit pracovní režim: development 20k--50k, finální experimenty cca 100k, full dataset jen volitelně
+- [x] potvrdit pracovní režim: reportované experimenty 20k--50k, full dataset jen volitelně
 - [x] uložit krátký dataset summary do reportu
 
 Status k 2026-03-07:
@@ -28,7 +28,7 @@ Status k 2026-03-07:
 - [x] spočítat počty chybějících hodnot v textových sloupcích
 - [x] prozkoumat rozdělení `Reviewer_Score`
 - [x] najít časté placeholdery typu `No Negative`, `No Positive`
-- [x] poznamenat do reportu, že dataset má ~515k řádků, ale pro hlavní experimenty stačí cca 100k
+- [x] poznamenat do reportu, že dataset má ~515k řádků, ale pro školní projekt stačí reportované vzorky 20k--50k
 - [x] ověřit délku recenzí a případné outliery
 - [x] rozhodnout finální label scheme
 
