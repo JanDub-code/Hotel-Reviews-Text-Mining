@@ -282,7 +282,7 @@ Positive & 823 (1.23\%) & 66,250 (98.77\%) \\ \hline
 \end{tabular}
 \end{table}
 
-The model recognizes positive reviews very well, but it still assigns part of the negative reviews to the positive class. Out of 6,125 negative test reviews, it correctly identifies 3,944 reviews (64.39\%) and incorrectly marks 2,181 reviews (35.61\%) as positive. These percentages are the most important part of the confusion matrix, because false positives in the negative class mean that problematic stays are missed. This behavior corresponds to the nature of the data: the negative class is smaller, lexically less homogeneous, and more likely to contain short or mixed formulations.
+The model recognizes positive reviews very well, but it still assigns part of the negative reviews to the positive class. Out of 6,125 negative test reviews, it correctly identifies 3,944 reviews (64.39\%) and incorrectly marks 2,181 reviews (35.61\%) as positive. These percentages are the most important part of the confusion matrix, because negative reviews incorrectly predicted as positive are false negatives for negative-review detection: problematic stays are missed. This behavior corresponds to the nature of the data: the negative class is smaller, lexically less homogeneous, and more likely to contain short or mixed formulations.
 
 \kapitola{Feature selection}
 
