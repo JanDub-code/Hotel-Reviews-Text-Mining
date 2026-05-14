@@ -2,7 +2,7 @@
 
 ## Verdikt po finálním spuštění
 
-Pipeline se podařilo spustit nad dodaným datasetem. Klasifikace a retrieval běžely nad celým dostupným datasetem pomocí `--sample-size 999999`; clustering běžel podle plánu na 50,000 řádcích.
+Pipeline se podařilo spustit nad dodaným datasetem. Klasifikace a retrieval běžely nad celým dostupným datasetem bez downsamplingu; clustering běžel podle plánu na 50,000 řádcích.
 
 Hlavní výsledky finálního běhu:
 

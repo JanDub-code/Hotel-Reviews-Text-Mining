@@ -1,0 +1,208 @@
+{
+  "config": {
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": 50000,
+    "k": 8,
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 30000,
+    "use_bigrams": true,
+    "random_state": 42,
+    "output_dir": "outputs/clustering_50k_comparison/k_8"
+  },
+  "dataset": {
+    "rows_loaded": 50000,
+    "rows_after_text_filter": 35090,
+    "rows_after_cleaning": 35088,
+    "n_documents": 35088
+  },
+  "preprocessing": {
+    "text_column": "negative_text",
+    "cleaning_steps": [
+      "placeholder replacement for Negative_Review",
+      "drop empty negative_text",
+      "lowercasing",
+      "remove non-letter characters",
+      "normalize whitespace",
+      "drop empty cleaned texts"
+    ],
+    "vectorizer": {
+      "method": "tfidf",
+      "stop_words": "english",
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 5,
+      "max_df": 0.9,
+      "max_features": 30000
+    }
+  },
+  "silhouette_score": 0.011419315722755822,
+  "cluster_sizes": {
+    "cluster_0": 2070,
+    "cluster_1": 2913,
+    "cluster_2": 5137,
+    "cluster_3": 20100,
+    "cluster_4": 2287,
+    "cluster_5": 777,
+    "cluster_6": 1652,
+    "cluster_7": 152
+  },
+  "top_terms": {
+    "cluster_0": [
+      "staff",
+      "friendly",
+      "reception",
+      "rude",
+      "helpful",
+      "room",
+      "reception staff",
+      "staff friendly",
+      "breakfast",
+      "check",
+      "hotel",
+      "service"
+    ],
+    "cluster_1": [
+      "breakfast",
+      "expensive",
+      "price",
+      "included",
+      "breakfast expensive",
+      "breakfast included",
+      "poor",
+      "good",
+      "room",
+      "better",
+      "buffet",
+      "food"
+    ],
+    "cluster_2": [
+      "hotel",
+      "bit",
+      "room",
+      "far",
+      "little",
+      "location",
+      "star",
+      "city",
+      "rooms",
+      "star hotel",
+      "night",
+      "little bit"
+    ],
+    "cluster_3": [
+      "room",
+      "good",
+      "bathroom",
+      "shower",
+      "like",
+      "rooms",
+      "didn",
+      "wifi",
+      "really",
+      "bar",
+      "service",
+      "little"
+    ],
+    "cluster_4": [
+      "small",
+      "room",
+      "room small",
+      "small room",
+      "rooms",
+      "rooms small",
+      "bit small",
+      "small rooms",
+      "size",
+      "bathroom",
+      "bit",
+      "little small"
+    ],
+    "cluster_5": [
+      "air",
+      "conditioning",
+      "air conditioning",
+      "room",
+      "hot",
+      "noisy",
+      "warm",
+      "window",
+      "air conditioner",
+      "work",
+      "night",
+      "open"
+    ],
+    "cluster_6": [
+      "bed",
+      "room",
+      "double",
+      "hard",
+      "uncomfortable",
+      "comfortable",
+      "double bed",
+      "small",
+      "bed comfortable",
+      "beds",
+      "bed hard",
+      "soft"
+    ],
+    "cluster_7": [
+      "perfect",
+      "just perfect",
+      "perfect stay",
+      "thing perfect",
+      "hotel perfect",
+      "stay",
+      "just",
+      "stay perfect",
+      "fault",
+      "thing",
+      "hotel",
+      "really"
+    ]
+  },
+  "representative_reviews": {
+    "cluster_0": [
+      "More staff at lunchtime",
+      "Staff",
+      "Staff"
+    ],
+    "cluster_1": [
+      "prize without breakfast",
+      "no breakfast in the uberprice",
+      "Breakfast"
+    ],
+    "cluster_2": [
+      "Everything of the hotel",
+      "everything about the hotel",
+      "Everything about the hotel"
+    ],
+    "cluster_3": [
+      "Notmuch",
+      "one elvatour",
+      "All"
+    ],
+    "cluster_4": [
+      "Room is small",
+      "room is too small",
+      "room are very small"
+    ],
+    "cluster_5": [
+      "No air conditioning",
+      "No air conditioning",
+      "No Air Conditioning"
+    ],
+    "cluster_6": [
+      "A stiffer bed",
+      "The bed",
+      "Bed"
+    ],
+    "cluster_7": [
+      "Nothing it seemed perfect to us",
+      "Everything was perfect",
+      "Everything was perfect"
+    ]
+  }
+}

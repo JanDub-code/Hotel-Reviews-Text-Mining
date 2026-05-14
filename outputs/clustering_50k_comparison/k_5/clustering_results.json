@@ -1,0 +1,148 @@
+{
+  "config": {
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": 50000,
+    "k": 5,
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 30000,
+    "use_bigrams": true,
+    "random_state": 42,
+    "output_dir": "outputs/clustering_50k_comparison/k_5"
+  },
+  "dataset": {
+    "rows_loaded": 50000,
+    "rows_after_text_filter": 35090,
+    "rows_after_cleaning": 35088,
+    "n_documents": 35088
+  },
+  "preprocessing": {
+    "text_column": "negative_text",
+    "cleaning_steps": [
+      "placeholder replacement for Negative_Review",
+      "drop empty negative_text",
+      "lowercasing",
+      "remove non-letter characters",
+      "normalize whitespace",
+      "drop empty cleaned texts"
+    ],
+    "vectorizer": {
+      "method": "tfidf",
+      "stop_words": "english",
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 5,
+      "max_df": 0.9,
+      "max_features": 30000
+    }
+  },
+  "silhouette_score": 0.0070252853683291025,
+  "cluster_sizes": {
+    "cluster_0": 3007,
+    "cluster_1": 27447,
+    "cluster_2": 1087,
+    "cluster_3": 1676,
+    "cluster_4": 1871
+  },
+  "top_terms": {
+    "cluster_0": [
+      "breakfast",
+      "expensive",
+      "included",
+      "breakfast expensive",
+      "breakfast included",
+      "price",
+      "poor",
+      "good",
+      "room",
+      "buffet",
+      "better",
+      "food"
+    ],
+    "cluster_1": [
+      "room",
+      "hotel",
+      "staff",
+      "bed",
+      "good",
+      "like",
+      "didn",
+      "bathroom",
+      "really",
+      "bar",
+      "shower",
+      "night"
+    ],
+    "cluster_2": [
+      "rooms",
+      "small",
+      "rooms small",
+      "small rooms",
+      "rooms little",
+      "little",
+      "need",
+      "little small",
+      "room",
+      "bigger",
+      "hotel",
+      "rooms need"
+    ],
+    "cluster_3": [
+      "small",
+      "room",
+      "room small",
+      "small room",
+      "size",
+      "bathroom",
+      "size room",
+      "little small",
+      "room size",
+      "bed",
+      "small bathroom",
+      "bathroom small"
+    ],
+    "cluster_4": [
+      "bit",
+      "bit small",
+      "room bit",
+      "little bit",
+      "room",
+      "little",
+      "small",
+      "bit far",
+      "bit expensive",
+      "bit noisy",
+      "far",
+      "rooms bit"
+    ]
+  },
+  "representative_reviews": {
+    "cluster_0": [
+      "Breakfast",
+      "Breakfast",
+      "No vetgtebls in breakfast"
+    ],
+    "cluster_1": [
+      "no wheatabix",
+      "All gud",
+      "Everything"
+    ],
+    "cluster_2": [
+      "Small apace rooms",
+      "rooms are elegants but very small",
+      "Rooms are VERY small"
+    ],
+    "cluster_3": [
+      "Room was small but that s all",
+      "Room is small",
+      "Room very small"
+    ],
+    "cluster_4": [
+      "A bit cliche but why not",
+      "A bit overprices",
+      "A bit overprices"
+    ]
+  }
+}

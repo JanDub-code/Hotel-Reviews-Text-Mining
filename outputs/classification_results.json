@@ -1,7 +1,8 @@
 {
   "config": {
-    "data": "/mnt/data/run_project/Hotel-Reviews-Text-Mining-main/data/raw/Hotel_Reviews.csv",
-    "sample_size": 999999,
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": null,
+    "full_dataset": true,
     "label_scheme": "binary",
     "text_column": "review_text",
     "min_df": 5,
@@ -11,7 +12,8 @@
     "feature_selection_k": 20000,
     "test_size": 0.2,
     "random_state": 42,
-    "output_dir": "/mnt/data/run_project/Hotel-Reviews-Text-Mining-main/outputs"
+    "output_dir": "outputs",
+    "effective_sample_size": null
   },
   "dataset": {
     "rows_loaded": 515738,

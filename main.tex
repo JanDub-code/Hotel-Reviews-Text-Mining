@@ -104,7 +104,6 @@ Main file & \texttt{Hotel\_Reviews.csv} \\ \hline
 Number of rows & 515,738 \\ \hline
 Number of columns & 17 \\ \hline
 Key attributes & \texttt{Positive\_Review}, \texttt{Negative\_Review}, \texttt{Reviewer\_Score}, \texttt{Hotel\_Name}, \texttt{Tags} \\ \hline
-Data types & text fields of type object, scores of type float64, selected counts of type int64 \\ \hline
 Missing values & 0 in the review-text fields and score; 3,268 missing values in \texttt{lat}/\texttt{lng} \\ \hline
 \texttt{Reviewer\_Score} range & 2.5 to 10.0 \\ \hline
 Mean / median score & 8.3951 / 8.8 \\ \hline
@@ -130,17 +129,21 @@ The distribution of \texttt{Reviewer\_Score} is shown in Figure \ref{fig:score-d
 
 \sekce{Working mode}
 
-The project uses different dataset scopes for different tasks. Classification and retrieval are configured for a full-dataset benchmark run, using a high \texttt{--sample-size} value that exceeds the number of available records and therefore disables downsampling in the shared loading function. Clustering remains sample-based with 50,000 records, because full-dataset clustering is slower, harder to interpret, and does not automatically improve cluster separation. 
+The project uses different dataset scopes for different tasks. Classification and the final retrieval query were run on the full available dataset without downsampling. Clustering remains sample-based with 50,000 records, because full-dataset clustering is slower, harder to interpret, and does not automatically improve cluster separation. 
 This compromise fits the educational nature of the project: the main goal is to compare methods and interpret results, not to maximize model performance at the cost of long runtime and higher memory requirements.
 
 \sekce{Reproducibility note}
 
-The dataset is not included in the repository because of its size and distribution through Kaggle. After downloading \texttt{Hotel\_Reviews.csv} into \texttt{data/raw/}, the larger final benchmark configuration can be reproduced with the following commands:
+The dataset is not included in the repository because of its size and distribution through Kaggle. After downloading \texttt{Hotel\_Reviews.csv} into \texttt{data/raw/}, the final benchmark and the supporting report figures can be reproduced with the following commands:
 
 \begin{lstlisting}[basicstyle=\ttfamily\scriptsize, numbers=none, frame=single, breaklines=true]
-python src/classification.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --use-bigrams --feature-selection-k 20000
+python src/classification.py --data data/raw/Hotel_Reviews.csv --full-dataset --use-bigrams --feature-selection-k 20000
+python src/feature_selection_experiments.py --data data/raw/Hotel_Reviews.csv --sample-size 50000 --use-bigrams
 python src/clustering.py --data data/raw/Hotel_Reviews.csv --sample-size 50000 --k 7 --use-bigrams
-python src/retrieval.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --query "dirty room and noisy street" --top-k 5
+python src/clustering_experiments.py --data data/raw/Hotel_Reviews.csv --sample-size 50000 --k-values 5,6,7,8,9 --use-bigrams --output-dir outputs/clustering_50k_comparison
+python src/retrieval.py --data data/raw/Hotel_Reviews.csv --full-dataset --query "dirty room and noisy street" --top-k 5
+python src/retrieval_experiments.py --data data/raw/Hotel_Reviews.csv --sample-size 20000 --use-bigrams
+python src/generate_report_figures.py --data data/raw/Hotel_Reviews.csv --clustering-comparison outputs/clustering_50k_comparison/clustering_k_comparison.csv
 \end{lstlisting}
 
 \kapitola{Data preprocessing}
@@ -244,6 +247,26 @@ Multinomial Naive Bayes & 0.9044 & 0.7726 & 0.8230 & 0.9544 \\ \hline
 
 Linear SVM ranked first in the final benchmark. Logistic Regression remained competitive, but it lagged mainly in macro recall. Naive Bayes achieved acceptable accuracy, but it performed worse on the minority negative class, which reduced macro F1.
 
+\sekce{Precision-Recall and ROC comparison}
+
+Because the negative class is much smaller than the positive class, the Precision-Recall curve in Figure \ref{fig:classification-pr} uses \emph{negative review} as the positive event. This makes the plot directly focused on the practically important task: finding dissatisfied customers. Logistic Regression has the highest ranking-based average precision (AP = 0.812), while Linear SVM has the best thresholded macro F1 in Table \ref{tab:classification-baseline}. The difference shows that ranking quality and the final hard-label decision are related, but not identical, evaluation views.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{outputs/visuals/classification_pr_curve.png}
+\caption{Precision-Recall curves for negative-review detection}
+\label{fig:classification-pr}
+\end{figure}
+
+The ROC curves in Figure \ref{fig:classification-roc} are included as a supplementary view. All three models achieve high ROC-AUC values above 0.95, but ROC-AUC is less sensitive to the strong class imbalance than the Precision-Recall view.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{outputs/visuals/classification_roc_curve.png}
+\caption{ROC curves for negative-review detection}
+\label{fig:classification-roc}
+\end{figure}
+
 \sekce{Interpretation of the best final model}
 
 For the best final model (\texttt{Linear SVM}), the confusion matrix shows the following behavior:
@@ -254,12 +277,12 @@ For the best final model (\texttt{Linear SVM}), the confusion matrix shows the f
 \begin{tabular}{|l|c|c|}
 \hline
 \textbf{Actual / predicted class} & \textbf{Negative} & \textbf{Positive} \\ \hline
-Negative & 3,944 & 2,181 \\ \hline
-Positive & 823 & 66,250 \\ \hline
+Negative & 3,944 (64.39\%) & 2,181 (35.61\%) \\ \hline
+Positive & 823 (1.23\%) & 66,250 (98.77\%) \\ \hline
 \end{tabular}
 \end{table}
 
-The model recognizes positive reviews very well, but it still assigns part of the negative reviews to the positive class. This corresponds to the nature of the data: the negative class is smaller, lexically less homogeneous, and more likely to contain short or mixed formulations.
+The model recognizes positive reviews very well, but it still assigns part of the negative reviews to the positive class. Out of 6,125 negative test reviews, it correctly identifies 3,944 reviews (64.39\%) and incorrectly marks 2,181 reviews (35.61\%) as positive. These percentages are the most important part of the confusion matrix, because false positives in the negative class mean that problematic stays are missed. This behavior corresponds to the nature of the data: the negative class is smaller, lexically less homogeneous, and more likely to contain short or mixed formulations.
 
 \kapitola{Feature selection}
 
@@ -285,7 +308,14 @@ Feature selection was first compared on a 50,000-row development sample with $k 
 \end{tabular}
 \end{table}
 
-The best development-sample result was obtained with \texttt{k = 5000}. For the final full-dataset benchmark, the project used \texttt{k = 20000} to retain more potentially useful terms in the much larger corpus while still applying chi-square feature selection.
+The same comparison is visualized in Figure \ref{fig:feature-selection}. The best development-sample result was obtained with \texttt{k = 5000}. For the final full-dataset benchmark, the project used \texttt{k = 20000} to retain more potentially useful terms in the much larger corpus while still applying chi-square feature selection. The graph also shows that the differences are relatively small: feature selection helps, but it is not the main source of the classification performance.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{outputs/visuals/feature_selection_linear_svm.png}
+\caption{Comparison of the Linear SVM baseline and selected values of $k$}
+\label{fig:feature-selection}
+\end{figure}
 
 \sekce{Most important sentiment terms}
 
@@ -318,24 +348,35 @@ Clustering was performed on \texttt{negative\_text}, because this field is the m
 
 \sekce{Choosing the number of clusters}
 
-The value $k = 7$ was selected from the earlier development comparison and then used in the larger 50,000-row clustering run. The final run is summarized in Table \ref{tab:clustering-k}.
+Several values of $k$ were compared on the same 50,000-row clustering sample. The comparison is summarized in Table \ref{tab:clustering-k-comparison} and visualized in Figure \ref{fig:clustering-k-comparison}.
 
 \begin{table}[H]
 \centering
-\caption{Final clustering summary for $k = 7$}
-\label{tab:clustering-k}
+\caption{K-Means comparison for different values of $k$}
+\label{tab:clustering-k-comparison}
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{k} & \textbf{Silhouette score} & \textbf{Min. cluster size} & \textbf{Max. cluster size} \\ \hline
+5 & 0.0070 & 1,087 & 27,447 \\ \hline
+6 & 0.0079 & 1,614 & 16,839 \\ \hline
 7 & 0.0085 & 366 & 19,397 \\ \hline
+8 & 0.0114 & 152 & 20,100 \\ \hline
+9 & 0.0082 & 309 & 21,553 \\ \hline
 \end{tabular}
 \end{table}
 
-The silhouette score is an internal measure of cluster compactness and separation [8]. The final value is very low, so the result must be interpreted carefully: the clusters are interpretable, but they are not sharply separated.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{outputs/visuals/clustering_k_comparison.png}
+\caption{Silhouette-score comparison for K-Means clustering}
+\label{fig:clustering-k-comparison}
+\end{figure}
+
+The silhouette score is an internal measure of cluster compactness and separation [8]. All tested values are very close to zero, so the result must be interpreted carefully: the clusters are readable, but they are not sharply separated. The highest silhouette score in this run was obtained for $k = 8$, but that configuration created a very small pseudo-negative cluster dominated by terms such as \texttt{perfect} and \texttt{just perfect}, while still keeping one very large mixed cluster. The final choice $k = 7$ is therefore a practical compromise: it keeps the number of clusters simple, avoids an extra tiny artificial cluster, and still separates several useful hotel-problem themes such as Wi-Fi/air conditioning, small rooms, breakfast, and parking.
 
 \sekce{Interpretation of the final clusters}
 
-For the best configuration, the clusters were manually named according to top terms and representative reviews:
+For the selected final configuration, the clusters were manually named according to top terms and representative reviews:
 
 \begin{table}[H]
 \centering
@@ -363,11 +404,11 @@ The low silhouette score and the existence of a large ``miscellaneous'' cluster 
 
 \sekce{Retrieval-module design}
 
-The retrieval module uses the same vector-space principle as the classification representation, but it is applied to \texttt{review\_text}. In the final run, retrieval was configured for the full available dataset with \texttt{--sample-size 999999}. The TF-IDF representation uses up to 30,000 unigram features, and retrieval is performed using cosine similarity, a common similarity measure in vector-space information retrieval [3].
+The retrieval module uses the same vector-space principle as the classification representation, but it is applied to \texttt{review\_text}. In the final run, retrieval was configured for the full available dataset without downsampling. The TF-IDF representation uses up to 30,000 unigram features, and retrieval is performed using cosine similarity, a common similarity measure in vector-space information retrieval [3].
 
 \sekce{Example queries}
 
-The final reproducibility run used the query \texttt{dirty room and noisy street}. Earlier qualitative checks also covered several specific and generic formulations:
+The final reproducibility run used the query \texttt{dirty room and noisy street}. A separate multi-query development check also covered several specific and generic formulations:
 
 \begin{itemize}
     \item \texttt{dirty room and noisy street},
@@ -378,24 +419,33 @@ The final reproducibility run used the query \texttt{dirty room and noisy street
     \item \texttt{good hotel}.
 \end{itemize}
 
-\sekce{Qualitative relevance assessment}
+\sekce{Similarity-score based assessment}
 
 \begin{table}[H]
 \centering
-\caption{Qualitative assessment of retrieval queries}
-\begin{tabular}{|p{6.2cm}|c|p{5cm}|}
+\caption{Retrieval-query comparison using cosine similarity}
+\small
+\begin{tabular}{|p{5.1cm}|c|c|p{3.6cm}|}
 \hline
-\textbf{Query} & \textbf{Rating} & \textbf{Note} \\ \hline
-friendly staff and great location & strong & very accurate or nearly exact matches \\ \hline
-small bathroom and old furniture & strong & returns old furniture, old bathrooms, and small rooms \\ \hline
-excellent breakfast and comfortable bed & strong & good coverage of breakfast and bed comfort \\ \hline
-dirty room and noisy street & mixed & captures noise well, but cleanliness less reliably \\ \hline
-slow wifi and poor service & mixed & strong signal for Wi-Fi, weaker signal for service \\ \hline
-good hotel & weak & too generic; returns boilerplate positive phrases \\ \hline
+\textbf{Query} & \textbf{Top cosine} & \textbf{Mean top-5} & \textbf{Interpretation note} \\ \hline
+friendly staff and great location & 1.0000 & 0.8233 & very close lexical matches \\ \hline
+small bathroom and old furniture & 0.6613 & 0.5112 & concrete negative aspects \\ \hline
+excellent breakfast and comfortable bed & 0.5636 & 0.5301 & two clear positive aspects \\ \hline
+dirty room and noisy street & 0.5671 & 0.5184 & noise captured strongly \\ \hline
+slow wifi and poor service & 0.6049 & 0.4904 & Wi-Fi signal dominates \\ \hline
+good hotel & 1.0000 & 0.8592 & generic query, low specificity \\ \hline
 \end{tabular}
+\normalsize
 \end{table}
 
-Retrieval works best when the query contains concrete aspects of the hotel experience. In the final full-dataset run, the top results for \texttt{dirty room and noisy street} were short but relevant, including \texttt{very noisy dirty}, \texttt{room on the street side very noisy}, and \texttt{the room was very noisy from the street}. For generic queries, the model naturally prefers short and frequent positive phrases, which reduces the usefulness of the results.
+The same scores are shown in Figure \ref{fig:retrieval-scores}. The cosine values should not be interpreted as manual relevance labels. They measure lexical similarity in TF-IDF space. This is why the generic query \texttt{good hotel} receives high cosine scores, even though it is less useful for analysis than a more specific query. Retrieval works best when the query contains concrete aspects of the hotel experience. In the final full-dataset run, the top results for \texttt{dirty room and noisy street} were short but relevant, including \texttt{very noisy dirty}, \texttt{room on the street side very noisy}, and \texttt{the room was very noisy from the street}. For generic queries, the model naturally prefers short and frequent positive phrases, which reduces the usefulness of the results.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{outputs/visuals/retrieval_query_scores.png}
+\caption{Top and mean top-5 cosine similarity for retrieval queries}
+\label{fig:retrieval-scores}
+\end{figure}
 
 \kapitola{Discussion}
 
@@ -415,7 +465,7 @@ The second problem is class imbalance after binary labeling. Classification accu
 
 \begin{itemize}
     \item clustering was still run on a 50,000-row sample rather than on the full dataset,
-    \item retrieval was evaluated qualitatively, without a manually annotated relevance benchmark,
+    \item retrieval was evaluated with cosine scores and manual inspection, without a manually annotated relevance benchmark,
     \item clustering was interpreted manually and without external ground truth,
     \item preprocessing uses simple cleaning without lemmatization, stemming, or transformer embeddings.
 \end{itemize}

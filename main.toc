@@ -1,7 +1,7 @@
-\xpg@aux {}{czech}
-\xpg@aux {}{english}
-\xpg@aux {}{czech}
-\xpg@aux {}{english}
+\selectlanguage *{czech}
+\selectlanguage *{english}
+\selectlanguage *{czech}
+\selectlanguage *{english}
 \contentsline {section}{\numberline {1}Introduction and motivation}{8}{section.1}%
 \contentsline {section}{\numberline {2}Project goal and research questions}{9}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Main objectives}{9}{subsection.2.1}%
@@ -9,7 +9,7 @@
 \contentsline {section}{\numberline {3}Dataset}{10}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Data source and structure}{10}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Data quality and practical limitations}{10}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Review-score distribution}{11}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}Review-score distribution}{10}{subsection.3.3}%
 \contentsline {subsection}{\numberline {3.4}Working mode}{11}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Reproducibility note}{11}{subsection.3.5}%
 \contentsline {section}{\numberline {4}Data preprocessing}{12}{section.4}%
@@ -19,24 +19,25 @@
 \contentsline {section}{\numberline {5}Sentiment classification}{14}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Models and evaluation setup}{14}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Final benchmark results with feature selection}{14}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Interpretation of the best final model}{14}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Feature selection}{16}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Method and experimental setup}{16}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Configuration comparison}{16}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Most important sentiment terms}{16}{subsection.6.3}%
-\contentsline {section}{\numberline {7}Clustering negative reviews}{18}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Input data and method}{18}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Choosing the number of clusters}{18}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}Interpretation of the final clusters}{18}{subsection.7.3}%
-\contentsline {subsection}{\numberline {7.4}Weaknesses of clustering}{19}{subsection.7.4}%
-\contentsline {section}{\numberline {8}Information retrieval}{20}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Retrieval-module design}{20}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Example queries}{20}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Qualitative relevance assessment}{20}{subsection.8.3}%
-\contentsline {section}{\numberline {9}Discussion}{22}{section.9}%
-\contentsline {subsection}{\numberline {9.1}What worked best}{22}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}What was problematic}{22}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Limitations of the work}{22}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Future work}{22}{subsection.9.4}%
-\contentsline {section}{\numberline {10}Conclusion}{24}{section.10}%
-\contentsline {section}{\numberline {11}References}{25}{section.11}%
+\contentsline {subsection}{\numberline {5.3}Precision-Recall and ROC comparison}{14}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Interpretation of the best final model}{16}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Feature selection}{17}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Method and experimental setup}{17}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Configuration comparison}{17}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Most important sentiment terms}{18}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Clustering negative reviews}{19}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Input data and method}{19}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Choosing the number of clusters}{19}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Interpretation of the final clusters}{20}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Weaknesses of clustering}{20}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Information retrieval}{21}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Retrieval-module design}{21}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Example queries}{21}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Similarity-score based assessment}{21}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Discussion}{23}{section.9}%
+\contentsline {subsection}{\numberline {9.1}What worked best}{23}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}What was problematic}{23}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Limitations of the work}{23}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Future work}{23}{subsection.9.4}%
+\contentsline {section}{\numberline {10}Conclusion}{25}{section.10}%
+\contentsline {section}{\numberline {11}References}{26}{section.11}%

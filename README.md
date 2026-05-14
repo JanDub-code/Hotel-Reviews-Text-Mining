@@ -237,7 +237,7 @@ pip install -r requirements-lock.txt
 4. spustit klasifikaci:
 
 ```bash
-python src/classification.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --use-bigrams --feature-selection-k 20000
+python src/classification.py --data data/raw/Hotel_Reviews.csv --full-dataset --use-bigrams --feature-selection-k 20000
 ```
 
 5. spustit clustering:
@@ -249,10 +249,10 @@ python src/clustering.py --data data/raw/Hotel_Reviews.csv --sample-size 50000 -
 6. spustit retrieval:
 
 ```bash
-python src/retrieval.py --data data/raw/Hotel_Reviews.csv --sample-size 999999 --query "dirty room and noisy street" --top-k 5
+python src/retrieval.py --data data/raw/Hotel_Reviews.csv --full-dataset --query "dirty room and noisy street" --top-k 5
 ```
 
-Poznámka: `--sample-size 999999` je praktický sentinel pro celý dataset, protože skripty vzorkují jen tehdy, když je zadaná hodnota menší než počet řádků. Klasifikace a retrieval jsou nastavené na celý dostupný dataset; clustering zůstává na 50k kvůli rychlosti, paměti a interpretovatelnosti.
+Poznámka: Přepínač `--full-dataset` vypíná vzorkování. Klasifikace a retrieval jsou nastavené na celý dostupný dataset; clustering zůstává na 50k kvůli rychlosti, paměti a interpretovatelnosti.
 
 ## 12. Recommended final scope
 ### Core scope

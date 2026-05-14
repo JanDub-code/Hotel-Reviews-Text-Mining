@@ -1,0 +1,228 @@
+{
+  "config": {
+    "data": "data/raw/Hotel_Reviews.csv",
+    "sample_size": 50000,
+    "k": 9,
+    "min_df": 5,
+    "max_df": 0.9,
+    "max_features": 30000,
+    "use_bigrams": true,
+    "random_state": 42,
+    "output_dir": "outputs/clustering_50k_comparison/k_9"
+  },
+  "dataset": {
+    "rows_loaded": 50000,
+    "rows_after_text_filter": 35090,
+    "rows_after_cleaning": 35088,
+    "n_documents": 35088
+  },
+  "preprocessing": {
+    "text_column": "negative_text",
+    "cleaning_steps": [
+      "placeholder replacement for Negative_Review",
+      "drop empty negative_text",
+      "lowercasing",
+      "remove non-letter characters",
+      "normalize whitespace",
+      "drop empty cleaned texts"
+    ],
+    "vectorizer": {
+      "method": "tfidf",
+      "stop_words": "english",
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 5,
+      "max_df": 0.9,
+      "max_features": 30000
+    }
+  },
+  "silhouette_score": 0.008208241936728896,
+  "cluster_sizes": {
+    "cluster_0": 21553,
+    "cluster_1": 783,
+    "cluster_2": 309,
+    "cluster_3": 1659,
+    "cluster_4": 1478,
+    "cluster_5": 787,
+    "cluster_6": 2690,
+    "cluster_7": 1372,
+    "cluster_8": 4457
+  },
+  "top_terms": {
+    "cluster_0": [
+      "room",
+      "staff",
+      "bathroom",
+      "bit",
+      "shower",
+      "little",
+      "wifi",
+      "bar",
+      "didn",
+      "service",
+      "noisy",
+      "night"
+    ],
+    "cluster_1": [
+      "coffee",
+      "tea",
+      "tea coffee",
+      "room",
+      "facilities",
+      "size",
+      "making",
+      "facilities room",
+      "making facilities",
+      "size room",
+      "coffee making",
+      "coffee room"
+    ],
+    "cluster_2": [
+      "good",
+      "really",
+      "breakfast good",
+      "breakfast",
+      "really good",
+      "wifi good",
+      "service good",
+      "dislike",
+      "complaints",
+      "thing good",
+      "good location",
+      "wifi"
+    ],
+    "cluster_3": [
+      "bed",
+      "room",
+      "double",
+      "hard",
+      "uncomfortable",
+      "double bed",
+      "comfortable",
+      "small",
+      "bed comfortable",
+      "beds",
+      "soft",
+      "bed hard"
+    ],
+    "cluster_4": [
+      "small",
+      "room",
+      "room small",
+      "small room",
+      "bit small",
+      "bathroom",
+      "bit",
+      "little small",
+      "room bit",
+      "small bathroom",
+      "room little",
+      "little"
+    ],
+    "cluster_5": [
+      "expensive",
+      "breakfast expensive",
+      "breakfast",
+      "bit expensive",
+      "parking",
+      "expensive breakfast",
+      "bit",
+      "little expensive",
+      "parking expensive",
+      "bar",
+      "quite expensive",
+      "little"
+    ],
+    "cluster_6": [
+      "breakfast",
+      "included",
+      "breakfast included",
+      "price",
+      "poor",
+      "room",
+      "better",
+      "food",
+      "buffet",
+      "good",
+      "breakfast poor",
+      "breakfast room"
+    ],
+    "cluster_7": [
+      "rooms",
+      "small",
+      "rooms small",
+      "like",
+      "small rooms",
+      "didn like",
+      "didn",
+      "rooms bit",
+      "bit",
+      "rooms little",
+      "little",
+      "bit small"
+    ],
+    "cluster_8": [
+      "hotel",
+      "room",
+      "star",
+      "staff",
+      "star hotel",
+      "stay",
+      "like",
+      "didn",
+      "night",
+      "rooms",
+      "booking",
+      "really"
+    ]
+  },
+  "representative_reviews": {
+    "cluster_0": [
+      "Nothing x",
+      "Nothing all",
+      "No remarks"
+    ],
+    "cluster_1": [
+      "no tea or coffee",
+      "no tea coffee makeing facilitys",
+      "There were no tea coffee making facilities in room"
+    ],
+    "cluster_2": [
+      "All good",
+      "All good",
+      "Everything was good"
+    ],
+    "cluster_3": [
+      "A stiffer bed",
+      "the bed",
+      "Bed"
+    ],
+    "cluster_4": [
+      "Room too small",
+      "Room is small",
+      "Room rather small"
+    ],
+    "cluster_5": [
+      "Expensive",
+      "It s expensive",
+      "Expensive"
+    ],
+    "cluster_6": [
+      "no breakfast in the uberprice",
+      "prize without breakfast",
+      "Breakfast"
+    ],
+    "cluster_7": [
+      "Small apace rooms",
+      "rooms are elegants but very small",
+      "Rooms"
+    ],
+    "cluster_8": [
+      "Everything about the hotel",
+      "Everything of the hotel",
+      "the beaches around hotel"
+    ]
+  }
+}

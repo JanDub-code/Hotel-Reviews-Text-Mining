@@ -49,7 +49,7 @@
 
 ## Phase 7 - Information retrieval
 - index: TF-IDF over `review_text`
-- final run: full available dataset via `--sample-size 999999`
+- final run: full available dataset without downsampling
 - similarity: cosine similarity
 - final query: `dirty room and noisy street`
 

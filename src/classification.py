@@ -67,6 +67,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Baseline sentiment classification for hotel reviews.")
     parser.add_argument("--data", required=True, help="Path to Hotel_Reviews.csv")
     parser.add_argument("--sample-size", type=int, default=50000, help="Optional sample size")
+    parser.add_argument(
+        "--full-dataset",
+        action="store_true",
+        help="Use all available rows and ignore --sample-size.",
+    )
     parser.add_argument("--label-scheme", choices=["binary", "three_class"], default="binary")
     parser.add_argument("--text-column", default="review_text", choices=["review_text", "positive_text", "negative_text"])
     parser.add_argument("--min-df", type=int, default=5)
@@ -81,7 +86,8 @@ def main() -> None:
 
     output_dir = ensure_output_dir(args.output_dir)
 
-    df = load_dataset(args.data, sample_size=args.sample_size, random_state=args.random_state)
+    effective_sample_size = None if args.full_dataset else args.sample_size
+    df = load_dataset(args.data, sample_size=effective_sample_size, random_state=args.random_state)
     rows_loaded = int(len(df))
     if args.label_scheme == "binary":
         df = create_binary_sentiment_labels(df)
@@ -114,8 +120,13 @@ def main() -> None:
     labels = sorted(df["label"].unique().tolist())
 
     models = build_models(random_state=args.random_state)
+    config = vars(args).copy()
+    if args.full_dataset:
+        config["sample_size"] = None
+    config["effective_sample_size"] = effective_sample_size
+
     all_results: dict[str, dict] = {
-        "config": vars(args),
+        "config": config,
         "dataset": {
             "rows_loaded": rows_loaded,
             "rows_after_labeling": rows_after_labeling,

@@ -42,6 +42,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Simple TF-IDF similarity search for hotel reviews.")
     parser.add_argument("--data", required=True, help="Path to Hotel_Reviews.csv")
     parser.add_argument("--sample-size", type=int, default=20000)
+    parser.add_argument(
+        "--full-dataset",
+        action="store_true",
+        help="Use all available rows and ignore --sample-size.",
+    )
     parser.add_argument("--text-column", default="review_text", choices=["review_text", "negative_text", "positive_text"])
     parser.add_argument("--query", default=None, help="Free-text query")
     parser.add_argument("--query-index", type=int, default=None, help="Use one document as query by index")
@@ -59,7 +64,8 @@ def main() -> None:
 
     output_dir = ensure_output_dir(args.output_dir)
 
-    df = load_dataset(args.data, sample_size=args.sample_size, random_state=args.random_state)
+    effective_sample_size = None if args.full_dataset else args.sample_size
+    df = load_dataset(args.data, sample_size=effective_sample_size, random_state=args.random_state)
     df = df[df[args.text_column].fillna("").str.len() > 0].copy()
     df["clean_text"] = df[args.text_column].map(basic_clean_text)
     df = df[df["clean_text"].str.len() > 0].copy().reset_index(drop=True)
