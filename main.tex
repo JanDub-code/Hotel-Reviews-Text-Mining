@@ -59,7 +59,7 @@
 
 Hotel reviews are a suitable example of real-world text data on which the main tasks of text mining can be demonstrated within one shared pipeline. Each review combines free text, a numerical score, and additional metadata. This combination makes it possible to address sentiment classification, topic clustering, and similar-document search at the same time.
 
-The practical motivation is twofold. First, hotel reviews are a commercially important source of feedback for accommodation providers and booking platforms such as Booking.com. Second, the dataset contains realistic noise: placeholders such as \texttt{No Negative}, very short entries, variable review length, and an imbalanced distribution of target classes. The project is therefore useful not only for demonstrating working methods, but also for discussing their limits openly.
+The practical motivation is twofold. First, hotel reviews are a commercially important source of feedback for accommodation providers and booking platforms such as Booking.com. Second, the dataset contains realistic noise: placeholders such as \texttt{No Negative}, very short entries, variable review length, and an imbalanced distribution of target classes. The project is therefore useful not only for demonstrating applicable methods, but also for discussing their limits openly.
 
 From the perspective of the course, the work covers text representation, preprocessing, classification, feature selection, clustering, and information retrieval, which are standard tasks in text mining and NLP [4, 5]. Instead of focusing on one isolated task, the project creates a consistent text-mining workflow with a shared dataset and a common evaluation logic.
 
@@ -158,7 +158,7 @@ The project creates three shared text variants:
     \item \texttt{positive\_text}: only the positive part of the review.
 \end{itemize}
 
-For sentiment classification, \texttt{review\_text} proved to be the best option because it combines both sides of the review and gives the model the most context. For clustering, \texttt{negative\_text} was used because problem topics are more readable in that field.
+For sentiment classification, \texttt{review\_text} proved to be the best option because it combines both sides of the review and gives the model the most context. For clustering, \texttt{negative\_text} was used because problem topics are more interpretable in that field.
 
 \sekce{Cleaning pipeline}
 
@@ -290,7 +290,7 @@ The model recognizes positive reviews very well, but it still assigns part of th
 
 In the next phase, \texttt{SelectKBest(chi2)} from scikit-learn was applied to the same TF-IDF representation [2]. The goal was to test whether feature selection can remove part of the noise, improve generalization, and provide more interpretable terms for sentiment analysis.
 
-Feature selection was first compared on a 50,000-row development sample with $k \in \{0, 5000, 10000, 20000, 30000\}$, where $k = 0$ means the baseline without feature selection. For that smaller experiment, the actual number of active features after vectorization was only 15,266; therefore, the configurations with $k = 20000$ and $k = 30000$ effectively returned all attributes and reproduced the baseline.
+Feature selection was first compared on a 50,000-row development sample with $k \in \{0, 5000, 10000, 20000, 30000\}$, where $k = 0$ means the baseline without feature selection. For that smaller experiment, the actual number of active features after vectorization was only 15,266; therefore, the configurations with $k = 20000$ and $k = 30000$ effectively retained all features and reproduced the baseline.
 
 \sekce{Configuration comparison}
 
@@ -372,7 +372,7 @@ Several values of $k$ were compared on the same 50,000-row clustering sample. Th
 \label{fig:clustering-k-comparison}
 \end{figure}
 
-The silhouette score is an internal measure of cluster compactness and separation [8]. All tested values are very close to zero, so the result must be interpreted carefully: the clusters are readable, but they are not sharply separated. The highest silhouette score in this run was obtained for $k = 8$, but that configuration created a very small pseudo-negative cluster dominated by terms such as \texttt{perfect} and \texttt{just perfect}, while still keeping one very large mixed cluster. The final choice $k = 7$ is therefore a practical compromise: it keeps the number of clusters simple, avoids an extra tiny artificial cluster, and still separates several useful hotel-problem themes such as Wi-Fi/air conditioning, small rooms, breakfast, and parking.
+The silhouette score is an internal measure of cluster compactness and separation [8]. All tested values are very close to zero, so the result must be interpreted carefully: the clusters are interpretable, but they are not sharply separated. The highest silhouette score in this run was obtained for $k = 8$, but that configuration created a very small pseudo-negative cluster dominated by terms such as \texttt{perfect} and \texttt{just perfect}, while still keeping one very large mixed cluster. The final choice $k = 7$ is therefore a practical compromise: it keeps the solution manageable, avoids an extra tiny artificial cluster, and still separates several useful hotel-problem themes such as Wi-Fi/air conditioning, small rooms, breakfast, and parking.
 
 \sekce{Interpretation of the final clusters}
 
@@ -398,7 +398,7 @@ The cleanest clusters are those focused on Wi-Fi, air conditioning, small rooms,
 
 \sekce{Weaknesses of clustering}
 
-The low silhouette score and the existence of a large ``miscellaneous'' cluster are directly related to input-text quality. The data still contains short or pseudo-negative formulations such as \texttt{No failings}, \texttt{No complaints}, \texttt{Everything was perfect}, \texttt{Breakfast}, or \texttt{Expensive}. These expressions reduce thematic purity and distort centroids. Therefore, clustering should be understood mainly as an exploratory tool for summarizing frequent problems, not as a final customer segmentation.
+The low silhouette score and the existence of a large ``miscellaneous'' cluster are directly related to input-text quality. The data still contains short or pseudo-negative formulations such as \texttt{No failings}, \texttt{No complaints}, \texttt{Everything was perfect}, \texttt{Breakfast}, or \texttt{Expensive}. These expressions reduce thematic purity and distort centroids. Therefore, clustering should be understood mainly as an exploratory tool for summarizing frequent problems, not as a definitive segmentation model.
 
 \kapitola{Information retrieval}
 
